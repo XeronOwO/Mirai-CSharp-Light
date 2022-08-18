@@ -58,7 +58,7 @@
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
-		<td colspan="5" rowspan="3">事件</td>
+		<td colspan="2" rowspan="5">事件</td>
 		<td>好友消息接口</td>
 		<td>IFriendMessageHandler</td>
 	</tr>
