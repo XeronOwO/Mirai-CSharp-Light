@@ -99,14 +99,30 @@ namespace Mirai.CSharp.Light.Session
 		#region 撤回消息
 
 		/// <summary>
-		/// 撤回消息
+		/// 撤回消息（APIVersion &gt;= 2.6.0）
+		/// </summary>
+		/// <param name="messageId">需要撤回的消息的消息ID</param>
+		/// <param name="target">好友ID或群ID</param>
+		/// <exception cref="MiraiException"></exception>
+		public void RevokeMessage(int messageId, long target);
+
+		/// <summary>
+		/// 异步撤回消息（APIVersion &gt;= 2.6.0）
+		/// </summary>
+		/// <param name="messageId">需要撤回的消息的消息ID</param>
+		/// <param name="target">好友ID或群ID</param>
+		/// <returns>Task实例</returns>
+		public Task RevokeMessageAsync(int messageId, long target);
+
+		/// <summary>
+		/// 撤回消息（APIVersion &lt; 2.6.0）
 		/// </summary>
 		/// <param name="messageId">需要撤回的消息的消息ID</param>
 		/// <exception cref="MiraiException"></exception>
 		public void RevokeMessage(int messageId);
 
 		/// <summary>
-		/// 异步撤回消息
+		/// 异步撤回消息（APIVersion &lt; 2.6.0）
 		/// </summary>
 		/// <param name="messageId">需要撤回的消息的消息ID</param>
 		/// <returns>Task实例</returns>
@@ -137,14 +153,32 @@ namespace Mirai.CSharp.Light.Session
 		#region 通过消息ID获取消息
 
 		/// <summary>
-		/// 通过消息ID获取消息
+		/// 通过消息ID获取消息（APIVersion &gt;= 2.6.0）
+		/// </summary>
+		/// <param name="id">获取消息的消息ID</param>
+		/// <param name="target">好友ID或群ID</param>
+		/// <returns>消息事件参数</returns>
+		/// <exception cref="MiraiException"></exception>
+		public IMessageEventArgs GetMessage(int id, long target);
+
+		/// <summary>
+		/// 通过消息ID获取消息（APIVersion &gt;= 2.6.0）
+		/// </summary>
+		/// <param name="id">获取消息的消息ID</param>
+		/// <param name="target">好友ID或群ID</param>
+		/// <returns>Task实例，其Result为消息事件参数</returns>
+		public Task<IMessageEventArgs> GetMessageAsync(int id, long target);
+
+		/// <summary>
+		/// 通过消息ID获取消息（APIVersion &lt; 2.6.0）
 		/// </summary>
 		/// <param name="messageId">消息ID</param>
 		/// <returns>消息事件参数</returns>
+		/// <exception cref="MiraiException"></exception>
 		public IMessageEventArgs GetMessage(int messageId);
 
 		/// <summary>
-		/// 通过消息ID获取消息
+		/// 通过消息ID获取消息（APIVersion &lt; 2.6.0）
 		/// </summary>
 		/// <param name="messageId">消息ID</param>
 		/// <returns>Task实例，其Result为消息事件参数</returns>

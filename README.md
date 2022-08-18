@@ -9,6 +9,7 @@
 ## 安装
 用自己的Visual Studio编译本项目，或者在 [Release](https://github.com/q2398003522/Mirai-CSharp-Light/releases) 中直接下载
 ## 使用例子
+[Program.cs](https://github.com/q2398003522/Mirai-CSharp-Light/blob/master/Mirai-CSharp-Light.Example/Program.cs)  
 [处理好友消息](https://github.com/q2398003522/Mirai-CSharp-Light/blob/master/Mirai-CSharp-Light.Example/Example.HandleFriendMessage.cs)  
 [处理群消息](https://github.com/q2398003522/Mirai-CSharp-Light/blob/master/Mirai-CSharp-Light.Example/Example.HandleGroupMessage.cs)  
 # 开发进度

@@ -54,7 +54,7 @@ namespace Mirai.CSharp.Light.Exception
 				30 => "消息过长",
 				400 => "错误的访问，如参数错误等",
 				_ => "未知错误",
-			} + "\n" + extraMessage)
+			} + "（" + extraMessage + "）")
 		{
 		}
 	}
