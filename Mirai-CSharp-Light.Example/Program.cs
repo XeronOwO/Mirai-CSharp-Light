@@ -11,11 +11,14 @@ namespace Mirai.CSharp.Light.Example
 	{
 		static void Main(string[] args)
 		{
-			var mirai = new MiraiCSharpLightBuilder().SetVerifyKey("VerifyKey")
+			var mirai = new MiraiCSharpLightBuilder().SetVerifyKey("Xeron_owo")
 													 .SetQQ(2787174629L)
 													 .AddHandler(new ExampleGroupMessageHandler())
 													 .AddHandler(new ExampleFriendMessageHandler())
-													 .Connect("http://127.0.0.1:12345");
+													 .Connect("http://1.117.59.28:6666");
+			Console.ReadKey();
+			var id = mirai.MiraiSession.SendTempMessage(2398003522L, 213817613L, new IChatMessage[] { new PlainMessage("测试") });
+			var e = mirai.MiraiSession.GetMessage(id);
 			Console.ReadKey();
 			mirai.Release();
 		}
