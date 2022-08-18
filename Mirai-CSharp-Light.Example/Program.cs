@@ -16,7 +16,6 @@ namespace Mirai.CSharp.Light.Example
 													 .AddHandler(new ExampleGroupMessageHandler())
 													 .AddHandler(new ExampleFriendMessageHandler())
 													 .Connect("http://1.117.59.28:6666");
-
 			Console.ReadKey();
 			var id = mirai.MiraiSession.SendTempMessage(2398003522L, 213817613L, new IChatMessage[] { new PlainMessage("测试") });
 			var e = mirai.MiraiSession.GetMessage(id);
