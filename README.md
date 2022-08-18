@@ -68,19 +68,19 @@
 	</tr>
 	<tr>
 		<td colspan="2" rowspan="4">事件</td>
-		<td>好友消息接口</td>
+		<td>好友消息事件</td>
 		<td>IFriendMessageHandler</td>
 	</tr>
 	<tr>
-		<td>群消息接口</td>
+		<td>群消息事件</td>
 		<td>IGroupMessageHandler</td>
 	</tr>
 	<tr>
-		<td>临时消息接口</td>
+		<td>临时消息事件</td>
 		<td>ITempMessageHandler</td>
 	</tr>
 	<tr>
-		<td>陌生人消息接口</td>
+		<td>陌生人消息事件</td>
 		<td>IStrangerMessageHandler</td>
 	</tr>
 </table>
