@@ -45,6 +45,7 @@
 		<td>发送好友消息</td>
 		<td>SendFriendMessage(Async)</td>
 	</tr>
+	<tr>
 		<td>发送群消息</td>
 		<td>SendGroupMessage(Async)</td>
 	</tr>
