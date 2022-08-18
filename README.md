@@ -19,7 +19,7 @@
 <table>
 	<tr>
 		<th colspan="3">功能</th>
-		<th>对应的函数或类</th>
+		<th>对应的函数或接口</th>
 	</tr>
 	<tr>
 		<td rowspan="10">接口</td>
