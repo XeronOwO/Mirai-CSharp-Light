@@ -16,35 +16,17 @@
 ## 已实现功能
 <table>
 	<tr>
-		<th colspan="2">功能</th>
+		<th colspan="3">功能</th>
 		<th>对应的函数或类</th>
 	</tr>
 	<tr>
-		<td rowspan="8">函数</td>
-		<td>发送群消息</td>
-		<td>SendGroupMessage(Async)</td>
-	</tr>
-	<tr>
-		<td>发送好友消息</td>
-		<td>SendFriendMessage(Async)</td>
-	</tr>
-	<tr>
-		<td>发送临时消息</td>
-		<td>SendTempMessage(Async)</td>
-	</tr>
-	<tr>
-		<td>撤回消息</td>
-		<td>RevokeMessage(Async)</td>
-	</tr>
-	<tr>
-		<td>上传图片</td>
-		<td>UploadImage(Async)</td>
-	</tr>
-	<tr>
+		<td rowspan="8">接口</td>
+		<td>缓存操作</td>
 		<td>通过消息ID获取消息</td>
 		<td>GetMessage(Async)</td>
 	</tr>
 	<tr>
+		<td rowspan="2">获取账号信息</td>
 		<td>获取好友列表</td>
 		<td>GetFriendList(Async)</td>
 	</tr>
@@ -53,7 +35,28 @@
 		<td>GetGroupList(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="3">接口</td>
+		<td rowspan="4">消息发送与撤回</td>
+		<td>发送好友消息</td>
+		<td>SendFriendMessage(Async)</td>
+	</tr>
+		<td>发送群消息</td>
+		<td>SendGroupMessage(Async)</td>
+	</tr>
+	<tr>
+		<td>发送临时会话消息</td>
+		<td>SendTempMessage(Async)</td>
+	</tr>
+	<tr>
+		<td>撤回消息</td>
+		<td>RevokeMessage(Async)</td>
+	</tr>
+	<tr>
+		<td rowspan="1">文件操作</td>
+		<td>上传图片</td>
+		<td>UploadImage(Async)</td>
+	</tr>
+	<tr>
+		<td colspan="2" rowspan="3">事件</td>
 		<td>好友消息接口</td>
 		<td>IFriendMessageHandler</td>
 	</tr>
