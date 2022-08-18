@@ -58,7 +58,7 @@
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
-		<td colspan="2" rowspan="5">事件</td>
+		<td colspan="2" rowspan="4">事件</td>
 		<td>好友消息接口</td>
 		<td>IFriendMessageHandler</td>
 	</tr>
@@ -67,15 +67,11 @@
 		<td>IGroupMessageHandler</td>
 	</tr>
 	<tr>
-		<td>好友消息接口</td>
-		<td>ITempMessageHandler</td>
-	</tr>
-	<tr>
 		<td>临时消息接口</td>
 		<td>ITempMessageHandler</td>
 	</tr>
 	<tr>
 		<td>陌生人消息接口</td>
-		<td>ITempMessageHandler</td>
+		<td>IStrangerMessageHandler</td>
 	</tr>
 </table>
