@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 namespace Mirai.CSharp.Light.Models.Data
 {
     /// <summary>
-    /// Bot信息接口
+    /// 用户在群里的信息
     /// </summary>
-    public interface IBasicData
+    public interface IGroupData
     {
         /// <summary>
-        /// QQ号
+        /// 群号
         /// </summary>
         public long Id { get; }
 
         /// <summary>
-        /// QQ昵称
+        /// 群名称
         /// </summary>
-        public string NickName { get; }
+        public string Name { get; }
 
         /// <summary>
-        /// 评论
+        /// Bot在群里的权限/身份
         /// </summary>
-        public string Remark { get; }
+        public GroupPermission Permission { get; }
     }
 }

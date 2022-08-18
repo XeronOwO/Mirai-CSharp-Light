@@ -4,24 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mirai.CSharp.Light.Models
+namespace Mirai.CSharp.Light.Models.Data
 {
     /// <summary>
-    /// 群聊权限/身份
+    /// 基本用户信息接口
     /// </summary>
-    public enum GroupPermission
+    public interface IUserData : ISenderData
     {
         /// <summary>
-        /// 成员
+        /// QQ昵称
         /// </summary>
-        Member,
+        public string Nickname { get; }
+
         /// <summary>
-        /// 管理员
+        /// 评论
         /// </summary>
-        Administrator,
-        /// <summary>
-        /// 群主
-        /// </summary>
-        Owner,
+        public string Remark { get; }
     }
 }

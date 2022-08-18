@@ -20,7 +20,7 @@
 		<th>对应的函数或类</th>
 	</tr>
 	<tr>
-		<td rowspan="5">函数</td>
+		<td rowspan="7">函数</td>
 		<td>发送群消息</td>
 		<td>SendGroupMessage(Async)</td>
 	</tr>
@@ -33,12 +33,24 @@
 		<td>SendTempMessage(Async)</td>
 	</tr>
 	<tr>
+		<td>撤回消息</td>
+		<td>RevokeMessage(Async)</td>
+	</tr>
+	<tr>
 		<td>上传图片</td>
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
 		<td>通过消息ID获取消息</td>
 		<td>GetMessage(Async)</td>
+	</tr>
+	<tr>
+		<td>获取好友列表</td>
+		<td>GetFriendList(Async)</td>
+	</tr>
+	<tr>
+		<td>获取群列表</td>
+		<td>GetGroupList(Async)</td>
 	</tr>
 	<tr>
 		<td rowspan="2">接口</td>

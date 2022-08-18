@@ -1,5 +1,5 @@
 ﻿using Mirai.CSharp.Light.Handler;
-using Mirai.CSharp.Light.Models.EventArgs;
+using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Models.Message;
 using Mirai.CSharp.Light.Session;
 using System;
@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mirai_CSharp_Light.Example
+namespace Mirai.CSharp.Light.Example
 {
 	internal class ExampleFriendMessageHandler : IFriendMessageHandler
 	{
-		public bool HandleFriendMessage(IMiraiSession session, IFriendMessageEventArgs e)
+		public bool HandleFriendMessage(IMiraiSession session, IFriendMessageData e)
 		{
 			// 处理好友消息
 

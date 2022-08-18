@@ -9,7 +9,7 @@ namespace Mirai.CSharp.Light.Models.Data
     /// <summary>
     /// 好友消息发送者信息
     /// </summary>
-    public interface IFriendMessageSenderData : IMessageSenderData
+    public interface IFriendMessageSenderData : ISenderData
 	{
 		/// <summary>
 		/// 昵称

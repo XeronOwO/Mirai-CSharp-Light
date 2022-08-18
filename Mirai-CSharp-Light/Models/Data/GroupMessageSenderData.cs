@@ -27,8 +27,8 @@ namespace Mirai.CSharp.Light.Models.Data
 
         public int MuteTimeRemaining { get; set; }
 
-        public GroupMessageSenderGroupData Group_ = new();
+        public GroupData Group_ = new();
 
-        public IGroupMessageSenderGroupData Group => Group_;
+        public IGroupData Group => Group_;
     }
 }

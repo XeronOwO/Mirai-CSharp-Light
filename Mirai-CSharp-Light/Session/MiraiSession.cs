@@ -3,7 +3,6 @@ using Mirai.CSharp.Light.Extensions;
 using Mirai.CSharp.Light.Logger;
 using Mirai.CSharp.Light.Models;
 using Mirai.CSharp.Light.Models.Data;
-using Mirai.CSharp.Light.Models.EventArgs;
 using Mirai.CSharp.Light.Models.Message;
 using Newtonsoft.Json.Linq;
 using System;
@@ -28,9 +27,9 @@ namespace Mirai.CSharp.Light.Session
 
 		public string SessionKey { get; set; } = "";
 
-		public BasicData BotData_ = new();
+		public UserData BotData_ = new();
 
-		public IBasicData BotData { get => BotData_; }
+		public IUserData BotData { get => BotData_; }
 
 		/// <summary>
 		/// 使用Mirai-Api-Http的HTTP Adapter
@@ -278,11 +277,11 @@ namespace Mirai.CSharp.Light.Session
 
 		#region 通过消息ID获取消息
 
-		public IMessageEventArgs GetMessage(int id, long target)
+		public CommonMessageData GetMessage(int id, long target)
 		{
 			if (APIVersion < Version.Parse("2.6.0"))
 			{
-				throw new System.Exception("API版本为2.6.0以下，请使用IMessageEventArgs GetMessage(int messageId)");
+				throw new System.Exception("API版本为2.6.0以下，请使用IMessageData GetMessage(int messageId)");
 			}
 			var result = Get("messageFromId", new JObject()
 			{
@@ -291,23 +290,23 @@ namespace Mirai.CSharp.Light.Session
 				["target"] = target,
 			});
 			logger.Info($"[GetMessage] => Id:{id}, target:{target}");
-			return MessageEventArgs.ParseAuto((JObject)result["data"]);
+			return CommonMessageData.Parse((JObject)result["data"]);
 		}
 
-		public Task<IMessageEventArgs> GetMessageAsync(int id, long target) => Task.Run(() =>
+		public Task<CommonMessageData> GetMessageAsync(int id, long target) => Task.Run(() =>
 		{
 			if (APIVersion < Version.Parse("2.6.0"))
 			{
-				throw new System.Exception("API版本为2.6.0以下，请使用Task<IMessageEventArgs> GetMessageAsync(int messageId)");
+				throw new System.Exception("API版本为2.6.0以下，请使用Task<IMessageData> GetMessageAsync(int messageId)");
 			}
 			return GetMessage(id, target);
 		});
 
-		public IMessageEventArgs GetMessage(int messageId)
+		public CommonMessageData GetMessage(int messageId)
 		{
 			if (APIVersion >= Version.Parse("2.6.0"))
 			{
-				throw new System.Exception("API版本为2.6.0及以上，请使用IMessageEventArgs GetMessage(int id, long target)");
+				throw new System.Exception("API版本为2.6.0及以上，请使用IMessageData GetMessage(int id, long target)");
 			}
 			var result = Get("messageFromId", new JObject()
 			{
@@ -315,17 +314,59 @@ namespace Mirai.CSharp.Light.Session
 				["id"] = messageId,
 			});
 			logger.Info($"[GetMessage] => Id:{messageId}");
-			return MessageEventArgs.ParseAuto((JObject)result["data"]);
+			return CommonMessageData.Parse((JObject)result["data"]);
 		}
 
-		public Task<IMessageEventArgs> GetMessageAsync(int messageId) => Task.Run(() =>
+		public Task<CommonMessageData> GetMessageAsync(int messageId) => Task.Run(() =>
 		{
 			if (APIVersion >= Version.Parse("2.6.0"))
 			{
-				throw new System.Exception("API版本为2.6.0及以上，请使用Task<IMessageEventArgs> GetMessageAsync(int id, long target)");
+				throw new System.Exception("API版本为2.6.0及以上，请使用Task<IMessageData> GetMessageAsync(int id, long target)");
 			}
 			return GetMessage(messageId);
 		});
+
+		#endregion
+
+		#region 获取好友列表
+
+		public IUserData[] GetFriendList()
+		{
+			var result = Get("friendList", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+			});
+			var count = ((JArray)result["data"]).Count;
+			var array = new IUserData[count];
+			for (int i = 0; i < count; i++)
+			{
+				array[i] = UserData.Parse((JObject)result["data"][i]);
+			}
+			return array;
+		}
+
+		public Task<IUserData[]> GetFriendListAsync() => Task.Run(() => GetFriendList());
+
+		#endregion
+
+		#region 获取群列表
+
+		public IGroupData[] GetGroupList()
+		{
+			var result = Get("groupList", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+			});
+			var count = ((JArray)result["data"]).Count;
+			var array = new IGroupData[count];
+			for (int i = 0; i < count; i++)
+			{
+				array[i] = GroupData.Parse((JObject)result["data"][i]);
+			}
+			return array;
+		}
+
+		public Task<IGroupData[]> GetGroupListAsync() => Task.Run(() => GetGroupList());
 
 		#endregion
 	}

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Models.Data
 {
-    internal class MessageSenderData : IMessageSenderData
-    {
-        public long Id { get; set; }
-    }
+	internal class GroupMemberData
+	{
+	}
 }

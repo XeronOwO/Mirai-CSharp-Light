@@ -1,4 +1,4 @@
-﻿using Mirai.CSharp.Light.Models.EventArgs;
+﻿using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Session;
 using System;
 using System.Collections.Generic;
@@ -19,6 +19,6 @@ namespace Mirai.CSharp.Light.Handler
 		/// <param name="session">Mirai会话</param>
 		/// <param name="e">群消息事件参数</param>
 		/// <returns>返回true中断后续的消息处理</returns>
-		public bool HandleGroupMessage(IMiraiSession session, IGroupMessageEventArgs e);
+		public bool HandleGroupMessage(IMiraiSession session, IGroupMessageData e);
 	}
 }

@@ -2,7 +2,7 @@
 using Mirai.CSharp.Light.Extensions;
 using Mirai.CSharp.Light.Handler;
 using Mirai.CSharp.Light.Logger;
-using Mirai.CSharp.Light.Models.EventArgs;
+using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Session;
 using Newtonsoft.Json.Linq;
 using System;
@@ -100,9 +100,7 @@ namespace Mirai.CSharp.Light
 				{
 					["sessionKey"] = miraiSession.SessionKey,
 				});
-				miraiSession.BotData_.Id = (long)result["data"]["qq"]["id"];
-				miraiSession.BotData_.NickName = (string)result["data"]["qq"]["nickname"];
-				miraiSession.BotData_.Remark = (string)result["data"]["qq"]["remark"];
+				miraiSession.BotData_ = UserData.Parse((JObject)result["data"]["qq"]);
 				result = miraiSession.Get("about");
 				var ver = (string)result["data"]["version"];
 				if (ver.StartsWith('v'))
@@ -238,12 +236,11 @@ namespace Mirai.CSharp.Light
 
 		private void HandleMessage(JObject message)
 		{
-			var type = (string)message["type"];
-			switch (type)
+			switch ((string)message["type"])
 			{
 				case "GroupMessage":
 					{
-						var e = GroupMessageEventArgs.Parse(message);
+						var e = GroupMessageData.Parse(message);
 						logger.Info($"[Group:{e.Sender.Group.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
@@ -263,7 +260,7 @@ namespace Mirai.CSharp.Light
 					break;
 				case "FriendMessage":
 					{
-						var e = FriendMessageEventArgs.Parse(message);
+						var e = FriendMessageData.Parse(message);
 						logger.Info($"[Friend:{e.Sender.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
@@ -282,7 +279,7 @@ namespace Mirai.CSharp.Light
 					break;
 				case "TempMessage":
 					{
-						var e = TempMessageEventArgs.Parse(message);
+						var e = TempMessageData.Parse(message);
 						logger.Info($"[Temp:{e.Sender.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
@@ -299,6 +296,7 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
+					// 同步修改CommonMessageData
 				default:
 					break;
 			}

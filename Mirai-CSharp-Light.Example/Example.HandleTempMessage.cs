@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Example
 {
-	internal class ExampleGroupMessageHandler : IGroupMessageHandler
+	internal class ExampleTempMessageHandler : ITempMessageHandler
 	{
-		public bool HandleGroupMessage(IMiraiSession session, IGroupMessageData e)
+		public bool HandleTempMessage(IMiraiSession session, ITempMessageData e)
 		{
 			// 处理群消息
 

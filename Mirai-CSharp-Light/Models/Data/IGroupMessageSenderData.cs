@@ -9,7 +9,7 @@ namespace Mirai.CSharp.Light.Models.Data
     /// <summary>
     /// 群消息发送者信息
     /// </summary>
-    public interface IGroupMessageSenderData : IMessageSenderData
+    public interface IGroupMessageSenderData : ISenderData
     {
         /// <summary>
         /// 群里的昵称
@@ -54,6 +54,6 @@ namespace Mirai.CSharp.Light.Models.Data
         /// <summary>
         /// 群信息
         /// </summary>
-        public IGroupMessageSenderGroupData Group { get; }
+        public IGroupData Group { get; }
     }
 }
