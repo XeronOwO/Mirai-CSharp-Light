@@ -364,6 +364,3 @@ FodyWeavers.xsd
 
 # Shell
 *.sh
-
-# Ignore update CS file
-Program.cs
