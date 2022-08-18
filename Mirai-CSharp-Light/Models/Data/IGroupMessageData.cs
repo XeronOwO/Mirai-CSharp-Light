@@ -20,7 +20,7 @@ namespace Mirai.CSharp.Light.Models.Data
 		/// <summary>
 		/// 消息发送者信息
 		/// </summary>
-		public IGroupSenderData Sender { get; }
+		public IGroupMemberData Sender { get; }
 
 		/// <summary>
 		/// 消息链

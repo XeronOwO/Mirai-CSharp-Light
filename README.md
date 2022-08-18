@@ -22,19 +22,23 @@
 		<th>对应的函数或类</th>
 	</tr>
 	<tr>
-		<td rowspan="9">接口</td>
+		<td rowspan="10">接口</td>
 		<td>缓存操作</td>
 		<td>通过消息ID获取消息</td>
 		<td>GetMessage(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="3">获取账号信息</td>
+		<td rowspan="4">获取账号信息</td>
 		<td>获取好友列表</td>
 		<td>GetFriendList(Async)</td>
 	</tr>
 	<tr>
 		<td>获取群列表</td>
 		<td>GetGroupList(Async)</td>
+	</tr>
+	<tr>
+		<td>获取群成员列表</td>
+		<td>GetGroupMemberList(Async)</td>
 	</tr>
 	<tr>
 		<td>获取Bot资料</td>

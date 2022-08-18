@@ -21,10 +21,10 @@ namespace Mirai.CSharp.Light.Models.Data
 		[JsonIgnore]
 		public string Type { get => type; set => type = value; }
 
-		public GroupSenderData sender = new();
+		public GroupMemberData sender = new();
 
 		[JsonIgnore]
-		public IGroupSenderData Sender => sender;
+		public IGroupMemberData Sender => sender;
 
 		[JsonIgnore]
 		public IChatMessage[] messageChain = Array.Empty<IChatMessage>();

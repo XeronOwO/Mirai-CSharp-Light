@@ -16,6 +16,8 @@ namespace Mirai.CSharp.Light.Session
 	/// </summary>
 	public interface IMiraiSession
 	{
+		#region 其它成员
+
 		/// <summary>
 		/// 会话密钥
 		/// </summary>
@@ -26,28 +28,121 @@ namespace Mirai.CSharp.Light.Session
 		/// </summary>
 		public IUserData BotData { get; }
 
-		#region 发送群消息
+		#endregion
+
+		#region 接口
+
+		#region 缓存操作
+
+		#region 通过messageId获取消息
 
 		/// <summary>
-		/// 发送群消息
+		/// 通过消息ID获取消息（APIVersion &gt;= 2.6.0）
 		/// </summary>
-		/// <param name="target">发送消息目标群的群号</param>
-		/// <param name="messageChain">消息链，是一个IChatMessage构成的数组</param>
-		/// <param name="quote">引用一条消息的消息ID进行回复</param>
+		/// <param name="id">获取消息的消息ID</param>
+		/// <param name="target">好友ID或群ID</param>
+		/// <returns>消息事件参数</returns>
 		/// <exception cref="MiraiException"></exception>
-		/// <returns>消息ID</returns>
-		public int SendGroupMessage(long target, IChatMessage[] messageChain, int? quote = null);
+		public CommonMessageData GetMessage(int id, long target);
 
 		/// <summary>
-		/// 异步发送群消息
+		/// 通过消息ID获取消息（APIVersion &gt;= 2.6.0）
 		/// </summary>
-		/// <param name="target">目标群</param>
-		/// <param name="messageChain">消息链</param>
-		/// <param name="quote">引用一条消息的消息ID进行回复</param>
-		/// <returns>Task实例，其Result为消息ID</returns>
-		public Task<int> SendGroupMessageAsync(long target, IChatMessage[] messageChain, int? quote = null);
+		/// <param name="id">获取消息的消息ID</param>
+		/// <param name="target">好友ID或群ID</param>
+		/// <returns>Task实例，其Result为消息事件参数</returns>
+		public Task<CommonMessageData> GetMessageAsync(int id, long target);
+
+		/// <summary>
+		/// 通过消息ID获取消息（APIVersion &lt; 2.6.0）
+		/// </summary>
+		/// <param name="messageId">消息ID</param>
+		/// <returns>消息事件参数</returns>
+		/// <exception cref="MiraiException"></exception>
+		public CommonMessageData GetMessage(int messageId);
+
+		/// <summary>
+		/// 通过消息ID获取消息（APIVersion &lt; 2.6.0）
+		/// </summary>
+		/// <param name="messageId">消息ID</param>
+		/// <returns>Task实例，其Result为消息事件参数</returns>
+		public Task<CommonMessageData> GetMessageAsync(int messageId);
 
 		#endregion
+
+		#endregion
+
+		#region 获取账号信息
+
+		#region 获取好友列表
+
+		/// <summary>
+		/// 获取好友列表
+		/// </summary>
+		/// <returns>好友列表</returns>
+		public IUserData[] GetFriendList();
+
+		/// <summary>
+		/// 异步获取好友列表
+		/// </summary>
+		/// <returns>Task实例，其Result为好友列表</returns>
+		public Task<IUserData[]> GetFriendListAsync();
+
+		#endregion
+
+		#region 获取群列表
+
+		/// <summary>
+		/// 获取群列表
+		/// </summary>
+		/// <returns>群列表</returns>
+		public IGroupData[] GetGroupList();
+
+		/// <summary>
+		/// 异步获取群列表
+		/// </summary>
+		/// <returns>Task实例，其Result为群列表</returns>
+		public Task<IGroupData[]> GetGroupListAsync();
+
+		#endregion
+
+		#region 获取群成员列表
+
+		/// <summary>
+		/// 获取群成员列表
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <returns>群列表</returns>
+		public IGroupMemberData[] GetGroupMemberList(long target);
+
+		/// <summary>
+		/// 异步获取群成员列表
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <returns>Task实例，其Result为群成员列表</returns>
+		public Task<IGroupMemberData[]> GetGroupMemberListAsync(long target);
+
+		#endregion
+
+		#region 获取Bot资料
+
+		/// <summary>
+		/// 获取Bot个人资料
+		/// </summary>
+		/// <returns>群列表</returns>
+		public IUserProfileData GetBotProfile();
+
+		/// <summary>
+		/// 异步Bot个人资料
+		/// </summary>
+		/// <returns>Task实例，其Result为Bot个人资料</returns>
+		public Task<IUserProfileData> GetBotProfileAsync();
+
+		#endregion
+
+		#endregion
+
+		#region 消息发送与撤回
 
 		#region 发送好友消息
 
@@ -69,6 +164,29 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="quote">引用一条消息的消息ID进行回复</param>
 		/// <returns>Task实例，其Result为消息ID</returns>
 		public Task<int> SendFriendMessageAsync(long target, IChatMessage[] messageChain, int? quote = null);
+
+		#endregion
+
+		#region 发送群消息
+
+		/// <summary>
+		/// 发送群消息
+		/// </summary>
+		/// <param name="target">发送消息目标群的群号</param>
+		/// <param name="messageChain">消息链，是一个IChatMessage构成的数组</param>
+		/// <param name="quote">引用一条消息的消息ID进行回复</param>
+		/// <exception cref="MiraiException"></exception>
+		/// <returns>消息ID</returns>
+		public int SendGroupMessage(long target, IChatMessage[] messageChain, int? quote = null);
+
+		/// <summary>
+		/// 异步发送群消息
+		/// </summary>
+		/// <param name="target">目标群</param>
+		/// <param name="messageChain">消息链</param>
+		/// <param name="quote">引用一条消息的消息ID进行回复</param>
+		/// <returns>Task实例，其Result为消息ID</returns>
+		public Task<int> SendGroupMessageAsync(long target, IChatMessage[] messageChain, int? quote = null);
 
 		#endregion
 
@@ -131,7 +249,11 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
-		#region 文件上传
+		#endregion
+
+		#region 多媒体内容上传
+
+		#region 图片文件上传
 
 		/// <summary>
 		/// 上传图片
@@ -151,87 +273,7 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
-		#region 通过消息ID获取消息
-
-		/// <summary>
-		/// 通过消息ID获取消息（APIVersion &gt;= 2.6.0）
-		/// </summary>
-		/// <param name="id">获取消息的消息ID</param>
-		/// <param name="target">好友ID或群ID</param>
-		/// <returns>消息事件参数</returns>
-		/// <exception cref="MiraiException"></exception>
-		public CommonMessageData GetMessage(int id, long target);
-
-		/// <summary>
-		/// 通过消息ID获取消息（APIVersion &gt;= 2.6.0）
-		/// </summary>
-		/// <param name="id">获取消息的消息ID</param>
-		/// <param name="target">好友ID或群ID</param>
-		/// <returns>Task实例，其Result为消息事件参数</returns>
-		public Task<CommonMessageData> GetMessageAsync(int id, long target);
-
-		/// <summary>
-		/// 通过消息ID获取消息（APIVersion &lt; 2.6.0）
-		/// </summary>
-		/// <param name="messageId">消息ID</param>
-		/// <returns>消息事件参数</returns>
-		/// <exception cref="MiraiException"></exception>
-		public CommonMessageData GetMessage(int messageId);
-
-		/// <summary>
-		/// 通过消息ID获取消息（APIVersion &lt; 2.6.0）
-		/// </summary>
-		/// <param name="messageId">消息ID</param>
-		/// <returns>Task实例，其Result为消息事件参数</returns>
-		public Task<CommonMessageData> GetMessageAsync(int messageId);
-
 		#endregion
-
-		#region 获取好友列表
-
-		/// <summary>
-		/// 获取好友列表
-		/// </summary>
-		/// <returns>好友列表</returns>
-		public IUserData[] GetFriendList();
-
-		/// <summary>
-		/// 异步获取好友列表
-		/// </summary>
-		/// <returns>Task实例，其Result为好友列表</returns>
-		public Task<IUserData[]> GetFriendListAsync();
-
-		#endregion
-
-		#region 获取群列表
-
-		/// <summary>
-		/// 获取群列表
-		/// </summary>
-		/// <returns>群列表</returns>
-		public IGroupData[] GetGroupList();
-
-		/// <summary>
-		/// 异步获取群列表
-		/// </summary>
-		/// <returns>Task实例，其Result为群列表</returns>
-		public Task<IGroupData[]> GetGroupListAsync();
-
-		#endregion
-
-		#region Bot个人资料
-
-		/// <summary>
-		/// 获取Bot个人资料
-		/// </summary>
-		/// <returns>群列表</returns>
-		public IUserProfileData GetBotProfile();
-
-		/// <summary>
-		/// 异步Bot个人资料
-		/// </summary>
-		/// <returns>Task实例，其Result为Bot个人资料</returns>
-		public Task<IUserProfileData> GetBotProfileAsync();
 
 		#endregion
 	}

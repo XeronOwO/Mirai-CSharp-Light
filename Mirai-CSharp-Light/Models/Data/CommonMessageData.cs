@@ -81,7 +81,7 @@ namespace Mirai.CSharp.Light.Extensions
 			return new GroupMessageData()
 			{
 				type = type,
-				sender = (GroupSenderData)sender,
+				sender = (GroupMemberData)sender,
 				messageChain = messageChain,
 			};
 		}

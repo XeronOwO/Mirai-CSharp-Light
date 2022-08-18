@@ -23,7 +23,7 @@ namespace Mirai.CSharp.Light.Session
 {
 	internal class MiraiSession : IMiraiSession
 	{
-		#region 类成员变量、属性定义
+		#region 其它成员
 
 		public string SessionKey { get; set; } = "";
 
@@ -39,8 +39,6 @@ namespace Mirai.CSharp.Light.Session
 		public Version APIVersion { get; set; } = new Version();
 
 		private readonly MiraiCSharpLightLogger logger = MiraiCSharpLightLogger.GetLogger("MiraiSession");
-
-		#endregion
 
 		#region 辅助函数
 
@@ -139,28 +137,151 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
-		#region 发送群消息
+		#endregion
 
-		public int SendGroupMessage(long target, IChatMessage[] messageChain, int? quote = null)
+		#region 接口
+
+		#region 缓存操作
+
+		#region 通过messageId获取消息
+
+		public CommonMessageData GetMessage(int id, long target)
 		{
-			var form = new JObject()
+			if (APIVersion < Version.Parse("2.6.0"))
+			{
+				throw new System.Exception("API版本为2.6.0以下，请使用IMessageData GetMessage(int messageId)");
+			}
+			var result = Get("messageFromId", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["id"] = id,
+				["target"] = target,
+			});
+			logger.Info($"[GetMessage] => Id:{id}, target:{target}");
+			return CommonMessageData.Parse((JObject)result["data"]);
+		}
+
+		public Task<CommonMessageData> GetMessageAsync(int id, long target) => Task.Run(() =>
+		{
+			if (APIVersion < Version.Parse("2.6.0"))
+			{
+				throw new System.Exception("API版本为2.6.0以下，请使用Task<IMessageData> GetMessageAsync(int messageId)");
+			}
+			return GetMessage(id, target);
+		});
+
+		public CommonMessageData GetMessage(int messageId)
+		{
+			if (APIVersion >= Version.Parse("2.6.0"))
+			{
+				throw new System.Exception("API版本为2.6.0及以上，请使用IMessageData GetMessage(int id, long target)");
+			}
+			var result = Get("messageFromId", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["id"] = messageId,
+			});
+			logger.Info($"[GetMessage] => Id:{messageId}");
+			return CommonMessageData.Parse((JObject)result["data"]);
+		}
+
+		public Task<CommonMessageData> GetMessageAsync(int messageId) => Task.Run(() =>
+		{
+			if (APIVersion >= Version.Parse("2.6.0"))
+			{
+				throw new System.Exception("API版本为2.6.0及以上，请使用Task<IMessageData> GetMessageAsync(int id, long target)");
+			}
+			return GetMessage(messageId);
+		});
+
+		#endregion
+
+		#endregion
+
+		#region 获取账号信息
+
+		#region 获取好友列表
+
+		public IUserData[] GetFriendList()
+		{
+			var result = Get("friendList", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+			});
+			var count = ((JArray)result["data"]).Count;
+			var array = new IUserData[count];
+			for (int i = 0; i < count; i++)
+			{
+				array[i] = UserData.Parse((JObject)result["data"][i]);
+			}
+			return array;
+		}
+
+		public Task<IUserData[]> GetFriendListAsync() => Task.Run(() => GetFriendList());
+
+		#endregion
+
+		#region 获取群列表
+
+		public IGroupData[] GetGroupList()
+		{
+			var result = Get("groupList", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+			});
+			var count = ((JArray)result["data"]).Count;
+			var array = new IGroupData[count];
+			for (int i = 0; i < count; i++)
+			{
+				array[i] = GroupData.Parse((JObject)result["data"][i]);
+			}
+			return array;
+		}
+
+		public Task<IGroupData[]> GetGroupListAsync() => Task.Run(() => GetGroupList());
+
+		#endregion
+
+		#region 获取群成员列表
+
+		public IGroupMemberData[] GetGroupMemberList(long target)
+		{
+			var result = Get("memberList", new JObject()
 			{
 				["sessionKey"] = SessionKey,
 				["target"] = target,
-				["messageChain"] = messageChain.ToJArray(),
-			};
-			if (quote != null)
+			});
+			var count = ((JArray)result["data"]).Count;
+			var array = new IGroupMemberData[count];
+			for (int i = 0; i < count; i++)
 			{
-				form["quote"] = quote;
+				array[i] = GroupMemberData.Parse((JObject)result["data"][i]);
 			}
-			var result = Post("sendGroupMessage", form);
-			logger.Info($"[Group:{target}] <= MessageChain:{messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
-			return (int)result["messageId"];
+			return array;
 		}
 
-		public Task<int> SendGroupMessageAsync(long target, IChatMessage[] messageChain, int? quote = null) => Task.Run(() => SendGroupMessage(target, messageChain, quote));
+		public Task<IGroupMemberData[]> GetGroupMemberListAsync(long target) => Task.Run(() => GetGroupMemberList(target));
 
 		#endregion
+
+		#region 获取Bot资料
+
+		public IUserProfileData GetBotProfile()
+		{
+			var result = Get("botProfile", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+			});
+			return UserProfileData.Parse(result);
+		}
+
+		public Task<IUserProfileData> GetBotProfileAsync() => Task.Run(() => GetBotProfile());
+
+		#endregion
+
+		#endregion
+
+		#region 消息发送与撤回
 
 		#region 发送好友消息
 
@@ -185,7 +306,30 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
-		#region 发送临时消息
+		#region 发送群消息
+
+		public int SendGroupMessage(long target, IChatMessage[] messageChain, int? quote = null)
+		{
+			var form = new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["messageChain"] = messageChain.ToJArray(),
+			};
+			if (quote != null)
+			{
+				form["quote"] = quote;
+			}
+			var result = Post("sendGroupMessage", form);
+			logger.Info($"[Group:{target}] <= MessageChain:{messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+			return (int)result["messageId"];
+		}
+
+		public Task<int> SendGroupMessageAsync(long target, IChatMessage[] messageChain, int? quote = null) => Task.Run(() => SendGroupMessage(target, messageChain, quote));
+
+		#endregion
+
+		#region 发送临时会话消息
 
 		public int SendTempMessage(long qq, long group, IChatMessage[] messageChain, int? quote = null)
 		{
@@ -260,7 +404,11 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
-		#region 文件上传
+		#endregion
+
+		#region 多媒体内容上传
+
+		#region 图片文件上传
 
 		public ImageMessage UploadImage(UploadType type, string path)
 		{
@@ -278,113 +426,7 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
-		#region 通过消息ID获取消息
-
-		public CommonMessageData GetMessage(int id, long target)
-		{
-			if (APIVersion < Version.Parse("2.6.0"))
-			{
-				throw new System.Exception("API版本为2.6.0以下，请使用IMessageData GetMessage(int messageId)");
-			}
-			var result = Get("messageFromId", new JObject()
-			{
-				["sessionKey"] = SessionKey,
-				["id"] = id,
-				["target"] = target,
-			});
-			logger.Info($"[GetMessage] => Id:{id}, target:{target}");
-			return CommonMessageData.Parse((JObject)result["data"]);
-		}
-
-		public Task<CommonMessageData> GetMessageAsync(int id, long target) => Task.Run(() =>
-		{
-			if (APIVersion < Version.Parse("2.6.0"))
-			{
-				throw new System.Exception("API版本为2.6.0以下，请使用Task<IMessageData> GetMessageAsync(int messageId)");
-			}
-			return GetMessage(id, target);
-		});
-
-		public CommonMessageData GetMessage(int messageId)
-		{
-			if (APIVersion >= Version.Parse("2.6.0"))
-			{
-				throw new System.Exception("API版本为2.6.0及以上，请使用IMessageData GetMessage(int id, long target)");
-			}
-			var result = Get("messageFromId", new JObject()
-			{
-				["sessionKey"] = SessionKey,
-				["id"] = messageId,
-			});
-			logger.Info($"[GetMessage] => Id:{messageId}");
-			return CommonMessageData.Parse((JObject)result["data"]);
-		}
-
-		public Task<CommonMessageData> GetMessageAsync(int messageId) => Task.Run(() =>
-		{
-			if (APIVersion >= Version.Parse("2.6.0"))
-			{
-				throw new System.Exception("API版本为2.6.0及以上，请使用Task<IMessageData> GetMessageAsync(int id, long target)");
-			}
-			return GetMessage(messageId);
-		});
-
 		#endregion
-
-		#region 获取好友列表
-
-		public IUserData[] GetFriendList()
-		{
-			var result = Get("friendList", new JObject()
-			{
-				["sessionKey"] = SessionKey,
-			});
-			var count = ((JArray)result["data"]).Count;
-			var array = new IUserData[count];
-			for (int i = 0; i < count; i++)
-			{
-				array[i] = UserData.Parse((JObject)result["data"][i]);
-			}
-			return array;
-		}
-
-		public Task<IUserData[]> GetFriendListAsync() => Task.Run(() => GetFriendList());
-
-		#endregion
-
-		#region 获取群列表
-
-		public IGroupData[] GetGroupList()
-		{
-			var result = Get("groupList", new JObject()
-			{
-				["sessionKey"] = SessionKey,
-			});
-			var count = ((JArray)result["data"]).Count;
-			var array = new IGroupData[count];
-			for (int i = 0; i < count; i++)
-			{
-				array[i] = GroupData.Parse((JObject)result["data"][i]);
-			}
-			return array;
-		}
-
-		public Task<IGroupData[]> GetGroupListAsync() => Task.Run(() => GetGroupList());
-
-		#endregion
-
-		#region Bot个人资料
-
-		public IUserProfileData GetBotProfile()
-		{
-			var result = Get("botProfile", new JObject()
-			{
-				["sessionKey"] = SessionKey,
-			});
-			return UserProfileData.Parse(result);
-		}
-
-		public Task<IUserProfileData> GetBotProfileAsync() => Task.Run(() => GetBotProfile());
 
 		#endregion
 	}
