@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # Shell
 *.sh
+
+# Program2
+Program2.cs
