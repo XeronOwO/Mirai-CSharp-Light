@@ -62,8 +62,8 @@
 		<td>RevokeMessage(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="1">文件操作</td>
-		<td>上传图片</td>
+		<td rowspan="1">多媒体内容上传</td>
+		<td>图片文件上传</td>
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
