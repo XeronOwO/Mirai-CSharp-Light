@@ -296,6 +296,26 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
+				case "StrangerMessage":
+					{
+						var e = StrangerMessageData.Parse(message);
+						logger.Info($"[Stranger:{e.Sender.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IStrangerMessageHandler)
+							{
+								if (e.MessageChain.Length > 0)
+								{
+									if (((IStrangerMessageHandler)handler).HandleStrangerMessage(miraiSession, e))
+									{
+										break;
+									}
+								}
+							}
+						}
+					}
+					break;
+					break;
 					// 同步修改CommonMessageData
 				default:
 					break;

@@ -12,6 +12,8 @@
 [Program.cs](https://github.com/q2398003522/Mirai-CSharp-Light/blob/master/Mirai-CSharp-Light.Example/Program.cs)  
 [处理好友消息](https://github.com/q2398003522/Mirai-CSharp-Light/blob/master/Mirai-CSharp-Light.Example/Example.HandleFriendMessage.cs)  
 [处理群消息](https://github.com/q2398003522/Mirai-CSharp-Light/blob/master/Mirai-CSharp-Light.Example/Example.HandleGroupMessage.cs)  
+[处理临时消息](https://github.com/q2398003522/Mirai-CSharp-Light/blob/master/Mirai-CSharp-Light.Example/Example.HandleTempMessage.cs)  
+[处理陌生人消息](https://github.com/q2398003522/Mirai-CSharp-Light/blob/master/Mirai-CSharp-Light.Example/Example.HandleStrangerMessage.cs)  
 # 开发进度
 ## 已实现功能
 <table>
@@ -56,7 +58,7 @@
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
-		<td colspan="2" rowspan="3">事件</td>
+		<td colspan="4" rowspan="3">事件</td>
 		<td>好友消息接口</td>
 		<td>IFriendMessageHandler</td>
 	</tr>
@@ -65,7 +67,15 @@
 		<td>IGroupMessageHandler</td>
 	</tr>
 	<tr>
+		<td>好友消息接口</td>
+		<td>ITempMessageHandler</td>
+	</tr>
+	<tr>
 		<td>临时消息接口</td>
+		<td>ITempMessageHandler</td>
+	</tr>
+	<tr>
+		<td>陌生人消息接口</td>
 		<td>ITempMessageHandler</td>
 	</tr>
 </table>

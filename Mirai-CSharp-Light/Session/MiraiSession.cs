@@ -38,7 +38,7 @@ namespace Mirai.CSharp.Light.Session
 
 		public Version APIVersion { get; set; } = new Version();
 
-		private MiraiCSharpLightLogger logger = MiraiCSharpLightLogger.GetLogger("MiraiSession");
+		private readonly MiraiCSharpLightLogger logger = MiraiCSharpLightLogger.GetLogger("MiraiSession");
 
 		#endregion
 
