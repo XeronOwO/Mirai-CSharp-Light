@@ -10,7 +10,7 @@ namespace Mirai.CSharp.Light.Extensions
 	/// <summary>
 	/// 上传类别的拓展功能类
 	/// </summary>
-	public static class UploadTypeExternsion
+	public static class UploadTypeExtension
 	{
 		/// <summary>
 		/// 上传内容的类别转成字符串

@@ -11,7 +11,7 @@ namespace Mirai.CSharp.Light.Extensions
 	/// <summary>
 	/// 聊天消息接口数组拓展功能类
 	/// </summary>
-	public static class IChatMessageArrayExternsion
+	public static class IChatMessageArrayExtension
 	{
 		/// <summary>
 		/// 消息聊天接口数组转换成JArray
