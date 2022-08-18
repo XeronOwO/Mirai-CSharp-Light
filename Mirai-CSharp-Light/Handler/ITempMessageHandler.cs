@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 namespace Mirai.CSharp.Light.Handler
 {
 	/// <summary>
-	/// 群消息处理接口
+	/// 临时消息处理接口
 	/// </summary>
-	public interface IGroupMessageHandler
+	public interface ITempMessageHandler
 	{
 		/// <summary>
-		/// 处理群消息
+		/// 处理临时消息
 		/// </summary>
 		/// <param name="session">Mirai会话</param>
-		/// <param name="e">群消息事件参数</param>
+		/// <param name="e">临时消息事件参数</param>
 		/// <returns>返回true中断后续的消息处理</returns>
-		public bool HandleGroupMessage(IMiraiSession session, IGroupMessageEventArgs e);
+		public bool HandleTempMessage(IMiraiSession session, ITempMessageEventArgs e);
 	}
 }

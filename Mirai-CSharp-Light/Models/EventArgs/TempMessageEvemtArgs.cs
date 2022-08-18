@@ -12,5 +12,14 @@ namespace Mirai.CSharp.Light.Models.EventArgs
     internal class TempMessageEventArgs : GroupMessageEventArgs, ITempMessageEventArgs
 	{
 		public override string Type { get; set; } = "TempMessage";
+
+		public new static TempMessageEventArgs Parse(JObject json)
+		{
+			var e = new TempMessageEventArgs();
+			ParseType(e, json);
+			ParseMessageChain(e, json);
+			ParseSender(e, json);
+			return e;
+		}
 	}
 }

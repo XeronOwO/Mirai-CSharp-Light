@@ -1,4 +1,6 @@
 ﻿using Mirai.CSharp.Light.Exception;
+using Mirai.CSharp.Light.Extensions;
+using Mirai.CSharp.Light.Logger;
 using Mirai.CSharp.Light.Models;
 using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Models.EventArgs;
@@ -36,6 +38,8 @@ namespace Mirai.CSharp.Light.Session
 		public HttpClient? httpClient;
 
 		public Version APIVersion { get; set; } = new Version();
+
+		private MiraiCSharpLightLogger logger = MiraiCSharpLightLogger.GetLogger("MiraiSession");
 
 		#endregion
 
@@ -148,6 +152,7 @@ namespace Mirai.CSharp.Light.Session
 				form["quote"] = quote;
 			}
 			var result = Post("sendGroupMessage", form);
+			logger.Info($"[Group:{target}] <= MessageChain:{messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return (int)result["messageId"];
 		}
 
@@ -170,6 +175,7 @@ namespace Mirai.CSharp.Light.Session
 				form["quote"] = quote;
 			}
 			var result = Post("sendFriendMessage", form);
+			logger.Info($"[Friend:{target}] <= MessageChain:{messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return (int)result["messageId"];
 		}
 
@@ -193,6 +199,7 @@ namespace Mirai.CSharp.Light.Session
 				form["quote"] = quote;
 			}
 			var result = Post("sendTempMessage", form);
+			logger.Info($"[Friend:{qq}] <= MessageChain:{messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return (int)result["messageId"];
 		}
 
@@ -211,8 +218,10 @@ namespace Mirai.CSharp.Light.Session
 			Post("recall", new JObject()
 			{
 				["sessionKey"] = SessionKey,
-				["target"] = messageId,
+				["messageId"] = messageId,
+				["target"] = target,
 			});
+			logger.Info($"[Revoke] <= MessageId:{messageId}, Target:{target}");
 		}
 
 		public Task RevokeMessageAsync(int messageId, long target) => Task.Run(() =>
@@ -235,6 +244,7 @@ namespace Mirai.CSharp.Light.Session
 				["sessionKey"] = SessionKey,
 				["target"] = messageId,
 			});
+			logger.Info($"[Revoke] <= target:{messageId}");
 		}
 
 		public Task RevokeMessageAsync(int messageId) => Task.Run(() =>
@@ -258,6 +268,7 @@ namespace Mirai.CSharp.Light.Session
 				{ new StringContent(type.GetString()), "type" },
 				{ new StreamContent(new FileStream(path, FileMode.Open, FileAccess.Read)), "img" }
 			});
+			logger.Info($"[UploadImage] <= ImageId:{(string)result["imageId"]}");
 			return new ImageMessage((string)result["imageId"], (string)result["url"], null, null);
 		}
 
@@ -279,6 +290,7 @@ namespace Mirai.CSharp.Light.Session
 				["id"] = id,
 				["target"] = target,
 			});
+			logger.Info($"[GetMessage] => Id:{id}, target:{target}");
 			return MessageEventArgs.ParseAuto((JObject)result["data"]);
 		}
 
@@ -302,6 +314,7 @@ namespace Mirai.CSharp.Light.Session
 				["sessionKey"] = SessionKey,
 				["id"] = messageId,
 			});
+			logger.Info($"[GetMessage] => Id:{messageId}");
 			return MessageEventArgs.ParseAuto((JObject)result["data"]);
 		}
 

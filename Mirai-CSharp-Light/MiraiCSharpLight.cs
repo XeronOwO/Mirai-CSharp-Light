@@ -1,4 +1,5 @@
 ﻿using Mirai.CSharp.Light.Exception;
+using Mirai.CSharp.Light.Extensions;
 using Mirai.CSharp.Light.Handler;
 using Mirai.CSharp.Light.Logger;
 using Mirai.CSharp.Light.Models.EventArgs;
@@ -241,33 +242,58 @@ namespace Mirai.CSharp.Light
 			switch (type)
 			{
 				case "GroupMessage":
-					foreach (var handler in handlers)
 					{
-						if (handler is IGroupMessageHandler)
+						var e = GroupMessageEventArgs.Parse(message);
+						logger.Info($"[Group:{e.Sender.Group.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
 						{
-							var e = GroupMessageEventArgs.Parse(message);
-							// 不是所有消息都做了Parse，所以有的不支持的消息不调用Handler
-							if (e.MessageChain.Length > 0)
+							if (handler is IGroupMessageHandler)
 							{
-								if (((IGroupMessageHandler)handler).HandleGroupMessage(miraiSession, e))
+								// 不是所有消息都做了Parse，所以有的不支持的消息不调用Handler
+								if (e.MessageChain.Length > 0)
 								{
-									break;
+									if (((IGroupMessageHandler)handler).HandleGroupMessage(miraiSession, e))
+									{
+										break;
+									}
 								}
 							}
 						}
 					}
 					break;
 				case "FriendMessage":
-					foreach (var handler in handlers)
 					{
-						if (handler is IFriendMessageHandler)
+						var e = FriendMessageEventArgs.Parse(message);
+						logger.Info($"[Friend:{e.Sender.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
 						{
-							var e = FriendMessageEventArgs.Parse(message);
-							if (e.MessageChain.Length > 0)
+							if (handler is IFriendMessageHandler)
 							{
-								if (((IFriendMessageHandler)handler).HandleFriendMessage(miraiSession, e))
+								if (e.MessageChain.Length > 0)
 								{
-									break;
+									if (((IFriendMessageHandler)handler).HandleFriendMessage(miraiSession, e))
+									{
+										break;
+									}
+								}
+							}
+						}
+					}
+					break;
+				case "TempMessage":
+					{
+						var e = TempMessageEventArgs.Parse(message);
+						logger.Info($"[Temp:{e.Sender.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is ITempMessageHandler)
+							{
+								if (e.MessageChain.Length > 0)
+								{
+									if (((ITempMessageHandler)handler).HandleTempMessage(miraiSession, e))
+									{
+										break;
+									}
 								}
 							}
 						}

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Mirai.CSharp.Light.Handler
 {
 	/// <summary>
-	/// 消息处理接口
+	/// 好友消息处理接口
 	/// </summary>
 	public interface IFriendMessageHandler
 	{
