@@ -20,7 +20,7 @@
 		<th>对应的函数或类</th>
 	</tr>
 	<tr>
-		<td rowspan="7">函数</td>
+		<td rowspan="8">函数</td>
 		<td>发送群消息</td>
 		<td>SendGroupMessage(Async)</td>
 	</tr>
@@ -53,12 +53,16 @@
 		<td>GetGroupList(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="2">接口</td>
+		<td rowspan="3">接口</td>
 		<td>好友消息接口</td>
 		<td>IFriendMessageHandler</td>
 	</tr>
 	<tr>
 		<td>群消息接口</td>
 		<td>IGroupMessageHandler</td>
+	</tr>
+	<tr>
+		<td>临时消息接口</td>
+		<td>ITempMessageHandler</td>
 	</tr>
 </table>
