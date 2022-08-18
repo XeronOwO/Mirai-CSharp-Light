@@ -63,6 +63,9 @@ namespace Mirai.CSharp.Light.Extensions
 				case "TempMessage":
 					data.sender = JsonConvert.DeserializeObject<TempMessageData>(message.ToString(Formatting.None)).sender;
 					break;
+				case "StrangerMessage":
+					data.sender = JsonConvert.DeserializeObject<StrangerMessageData>(message.ToString(Formatting.None)).sender;
+					break;
 				default:
 					break;
 			}
@@ -107,6 +110,20 @@ namespace Mirai.CSharp.Light.Extensions
 			{
 				type = type,
 				sender = (TempSenderData)sender,
+				messageChain = messageChain,
+			};
+		}
+
+		/// <summary>
+		/// 作为陌生人消息信息获取
+		/// </summary>
+		/// <returns>群消息信息</returns>
+		public IStrangerMessageData GetAsStrangerMessageData()
+		{
+			return new StrangerMessageData()
+			{
+				type = type,
+				sender = (UserData)sender,
 				messageChain = messageChain,
 			};
 		}

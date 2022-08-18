@@ -218,5 +218,21 @@ namespace Mirai.CSharp.Light.Session
 		public Task<IGroupData[]> GetGroupListAsync();
 
 		#endregion
+
+		#region Bot个人资料
+
+		/// <summary>
+		/// 获取Bot个人资料
+		/// </summary>
+		/// <returns>群列表</returns>
+		public IUserProfileData GetBotProfile();
+
+		/// <summary>
+		/// 异步Bot个人资料
+		/// </summary>
+		/// <returns>Task实例，其Result为Bot个人资料</returns>
+		public Task<IUserProfileData> GetBotProfileAsync();
+
+		#endregion
 	}
 }

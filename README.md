@@ -28,13 +28,17 @@
 		<td>GetMessage(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="2">获取账号信息</td>
+		<td rowspan="3">获取账号信息</td>
 		<td>获取好友列表</td>
 		<td>GetFriendList(Async)</td>
 	</tr>
 	<tr>
 		<td>获取群列表</td>
 		<td>GetGroupList(Async)</td>
+	</tr>
+	<tr>
+		<td>获取Bot资料</td>
+		<td>GetBotProfile(Async)</td>
 	</tr>
 	<tr>
 		<td rowspan="4">消息发送与撤回</td>

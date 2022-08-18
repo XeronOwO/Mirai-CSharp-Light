@@ -315,9 +315,9 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
-					break;
 					// 同步修改CommonMessageData
 				default:
+					logger.Warning($"[Unsupported] => {message.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 					break;
 			}
 		}

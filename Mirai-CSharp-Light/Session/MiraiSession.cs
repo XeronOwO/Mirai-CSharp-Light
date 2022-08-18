@@ -52,16 +52,19 @@ namespace Mirai.CSharp.Light.Session
 		/// <exception cref="MiraiException"></exception>
 		private static JObject CheckResult(JObject result)
 		{
-			var code = (int)result["code"];
-			if (code > 0)
+			if (result.ContainsKey("code"))
 			{
-				if (result.ContainsKey("msg"))
+				var code = (int)result["code"];
+				if (code > 0)
 				{
-					throw new MiraiException(code, (string)result["msg"]);
-				}
-				else
-				{
-					throw new MiraiException(code);
+					if (result.ContainsKey("msg"))
+					{
+						throw new MiraiException(code, (string)result["msg"]);
+					}
+					else
+					{
+						throw new MiraiException(code);
+					}
 				}
 			}
 			return result;
@@ -367,6 +370,21 @@ namespace Mirai.CSharp.Light.Session
 		}
 
 		public Task<IGroupData[]> GetGroupListAsync() => Task.Run(() => GetGroupList());
+
+		#endregion
+
+		#region Bot个人资料
+
+		public IUserProfileData GetBotProfile()
+		{
+			var result = Get("botProfile", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+			});
+			return UserProfileData.Parse(result);
+		}
+
+		public Task<IUserProfileData> GetBotProfileAsync() => Task.Run(() => GetBotProfile());
 
 		#endregion
 	}
