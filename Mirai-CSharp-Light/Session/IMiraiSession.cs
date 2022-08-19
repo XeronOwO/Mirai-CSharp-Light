@@ -112,7 +112,7 @@ namespace Mirai.CSharp.Light.Session
 		/// 获取群成员列表
 		/// </summary>
 		/// <param name="target">指定群的群号</param>
-		/// <returns>群列表</returns>
+		/// <returns>群成员列表</returns>
 		public IGroupMemberData[] GetGroupMemberList(long target);
 
 		/// <summary>
@@ -127,16 +127,72 @@ namespace Mirai.CSharp.Light.Session
 		#region 获取Bot资料
 
 		/// <summary>
-		/// 获取Bot个人资料
+		/// 获取Bot资料
 		/// </summary>
-		/// <returns>群列表</returns>
+		/// <returns>Bot资料</returns>
 		public IUserProfileData GetBotProfile();
 
 		/// <summary>
-		/// 异步Bot个人资料
+		/// 异步获取Bot资料
 		/// </summary>
-		/// <returns>Task实例，其Result为Bot个人资料</returns>
+		/// <returns>Task实例，其Result为Bot资料</returns>
 		public Task<IUserProfileData> GetBotProfileAsync();
+
+		#endregion
+
+		#region 获取好友资料
+
+		/// <summary>
+		/// 获取好友资料
+		/// </summary>
+		/// <param name="target">指定好友账号</param>
+		/// <returns>好友资料</returns>
+		public IUserProfileData GetFriendProfile(long target);
+
+		/// <summary>
+		/// 异步获取好友资料
+		/// </summary>
+		/// <param name="target">指定好友账号</param>
+		/// <returns>Task实例，其Result为好友资料</returns>
+		public Task<IUserProfileData> GetFriendProfileAsync(long target);
+
+		#endregion
+
+		#region 获取群成员资料
+
+		/// <summary>
+		/// 获取群成员资料
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">群成员QQ号码</param>
+		/// <returns>群成员资料</returns>
+		public IUserProfileData GetGroupMemberProfile(long target, long memberId);
+
+		/// <summary>
+		/// 异步获取群成员资料
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">群成员QQ号码</param>
+		/// <returns>Task实例，其Result为群成员资料</returns>
+		public Task<IUserProfileData> GetGroupMemberProfileAsync(long target, long memberId);
+
+		#endregion
+
+		#region 获取QQ用户资料
+
+		/// <summary>
+		/// 获取QQ用户资料
+		/// </summary>
+		/// <param name="target">要查询的QQ号码</param>
+		/// <returns>QQ用户资料</returns>
+		public IUserProfileData GetUserProfile(long target);
+
+		/// <summary>
+		/// 异步获取QQ用户资料
+		/// </summary>
+		/// <param name="target">要查询的QQ号码</param>
+		/// <returns>Task实例，其Result为QQ用户资料</returns>
+		public Task<IUserProfileData> GetUserProfileAsync(long target);
 
 		#endregion
 

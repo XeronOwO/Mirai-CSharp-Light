@@ -279,6 +279,55 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
+		#region 获取好友资料
+
+		public IUserProfileData GetFriendProfile(long target)
+		{
+			var result = Get("friendProfile", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+			});
+			return UserProfileData.Parse(result);
+		}
+
+		public Task<IUserProfileData> GetFriendProfileAsync(long target) => Task.Run(() => GetFriendProfile(target));
+
+		#endregion
+
+		#region 获取群成员资料
+
+		public IUserProfileData GetGroupMemberProfile(long target, long memberId)
+		{
+			var result = Get("memberProfile", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["memberId"] = memberId,
+			});
+			return UserProfileData.Parse(result);
+		}
+
+		public Task<IUserProfileData> GetGroupMemberProfileAsync(long target, long memberId) => Task.Run(() => GetGroupMemberProfile(target, memberId));
+
+		#endregion
+
+		#region 获取QQ用户资料
+
+		public IUserProfileData GetUserProfile(long target)
+		{
+			var result = Get("userProfile", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+			});
+			return UserProfileData.Parse(result);
+		}
+
+		public Task<IUserProfileData> GetUserProfileAsync(long target) => Task.Run(() => GetUserProfileAsync(target));
+
+		#endregion
+
 		#endregion
 
 		#region 消息发送与撤回

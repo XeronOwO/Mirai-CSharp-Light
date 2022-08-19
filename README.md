@@ -1,10 +1,13 @@
 # Mirai-CSharp-Light
 轻量化的Mirai-CSharp
 # 关于
+## 简介
 这是一个帮助C#开发者与 [Mirai](https://github.com/mamoe/mirai) 交互的轻量化项目  
 灵感源自 [Executor-Cheng的Mirai-CSharp](https://github.com/Executor-Cheng/Mirai-CSharp)  
-相比于 [Mirai-CSharp](https://github.com/Executor-Cheng/Mirai-CSharp) ，Mirai-CSharp-Light更加轻量化、易于使用，而且几乎所有功能都同时支持同步与异步  
+相比于 [Mirai-CSharp](https://github.com/Executor-Cheng/Mirai-CSharp) ，Mirai-CSharp-Light更加轻量化、简洁、易于使用，而且几乎所有功能都同时支持同步与异步  
 它通过调用 [Mirai-Api-Http](https://github.com/project-mirai/mirai-api-http) 提供的 Http-Api 与其交互
+## 第三方库
+[Newtownsoft.Json](https://www.newtonsoft.com/json)
 # 开始使用
 ## 安装
 用自己的Visual Studio编译本项目，或者在 [Release](https://github.com/q2398003522/Mirai-CSharp-Light/releases) 中直接下载
@@ -22,13 +25,13 @@
 		<th>对应的函数或接口</th>
 	</tr>
 	<tr>
-		<td rowspan="10">接口</td>
+		<td rowspan="13">接口</td>
 		<td>缓存操作</td>
 		<td>通过消息ID获取消息</td>
 		<td>GetMessage(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="4">获取账号信息</td>
+		<td rowspan="7">获取账号信息</td>
 		<td>获取好友列表</td>
 		<td>GetFriendList(Async)</td>
 	</tr>
@@ -43,6 +46,18 @@
 	<tr>
 		<td>获取Bot资料</td>
 		<td>GetBotProfile(Async)</td>
+	</tr>
+	<tr>
+		<td>获取好友资料</td>
+		<td>GetFriendProfile(Async)</td>
+	</tr>
+	<tr>
+		<td>获取群成员资料</td>
+		<td>GetGroupMemberProfile(Async)</td>
+	</tr>
+	<tr>
+		<td>获取QQ用户资料</td>
+		<td>GetUserProfile(Async)</td>
 	</tr>
 	<tr>
 		<td rowspan="4">消息发送与撤回</td>
