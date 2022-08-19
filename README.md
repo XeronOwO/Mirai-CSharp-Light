@@ -25,7 +25,7 @@
 		<th>对应的函数或接口</th>
 	</tr>
 	<tr>
-		<td rowspan="15">接口</td>
+		<td rowspan="16">接口</td>
 		<td>缓存操作</td>
 		<td>通过消息ID获取消息</td>
 		<td>GetMessage(Async)</td>
