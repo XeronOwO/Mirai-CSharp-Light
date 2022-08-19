@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Example
 {
-	internal class ExampleStrangerMessageHandler : IStrangerMessageHandler
+	internal class ExampleStrangerMessageHandler : IStrangerMessageHandler // 可以添加多个Handler
 	{
 		public bool HandleStrangerMessage(IMiraiSession session, IStrangerMessageData e)
 		{

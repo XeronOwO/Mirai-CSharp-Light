@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Example
 {
-	internal class ExampleFriendMessageHandler : IFriendMessageHandler
+	internal class ExampleFriendMessageHandler : IFriendMessageHandler // 可以添加多个Handler
 	{
 		public bool HandleFriendMessage(IMiraiSession session, IFriendMessageData e)
 		{

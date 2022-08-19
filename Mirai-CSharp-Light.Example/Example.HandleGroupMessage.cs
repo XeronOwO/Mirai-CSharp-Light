@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Example
 {
-	internal class ExampleGroupMessageHandler : IGroupMessageHandler
+	internal class ExampleGroupMessageHandler : IGroupMessageHandler // 可以添加多个Handler
 	{
 		public bool HandleGroupMessage(IMiraiSession session, IGroupMessageData e)
 		{

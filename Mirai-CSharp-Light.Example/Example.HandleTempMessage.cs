@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Example
 {
-	internal class ExampleTempMessageHandler : ITempMessageHandler
+	internal class ExampleTempMessageHandler : ITempMessageHandler // 可以添加多个Handler
 	{
 		public bool HandleTempMessage(IMiraiSession session, ITempMessageData e)
 		{
