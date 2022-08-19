@@ -25,7 +25,7 @@
 		<th>对应的函数或接口</th>
 	</tr>
 	<tr>
-		<td rowspan="13">接口</td>
+		<td rowspan="15">接口</td>
 		<td>缓存操作</td>
 		<td>通过消息ID获取消息</td>
 		<td>GetMessage(Async)</td>
@@ -60,7 +60,7 @@
 		<td>GetUserProfile(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="4">消息发送与撤回</td>
+		<td rowspan="6">消息发送与撤回</td>
 		<td>发送好友消息</td>
 		<td>SendFriendMessage(Async)</td>
 	</tr>
@@ -73,8 +73,16 @@
 		<td>SendTempMessage(Async)</td>
 	</tr>
 	<tr>
+		<td>发送头像戳一戳消息</td>
+		<td>SendNudge(Async)</td>
+	</tr>
+	<tr>
 		<td>撤回消息</td>
 		<td>RevokeMessage(Async)</td>
+	</tr>
+	<tr>
+		<td>获取漫游消息</td>
+		<td>GetRoamingMessages(Async)</td>
 	</tr>
 	<tr>
 		<td rowspan="1">多媒体内容上传</td>

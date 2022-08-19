@@ -6,6 +6,7 @@ using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Models.Message;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -57,11 +58,11 @@ namespace Mirai.CSharp.Light.Session
 				{
 					if (result.ContainsKey("msg"))
 					{
-						throw new MiraiException(code, (string)result["msg"]);
+						throw new MiraiException("MiraiSession", $"API返回结果不为零[{code}]", code, (string)result["msg"]);
 					}
 					else
 					{
-						throw new MiraiException(code);
+						throw new MiraiException("MiraiSession", $"API返回结果不为零[{code}]", code);
 					}
 				}
 			}
@@ -73,7 +74,7 @@ namespace Mirai.CSharp.Light.Session
 			if (msg.StatusCode != HttpStatusCode.OK)
 			{
 				var text = $"HTTP错误({(int)msg.StatusCode})：{msg.ReasonPhrase}";
-				throw new System.Exception(text);
+				throw new MiraiException("MiraiSession", text);
 			}
 		}
 
@@ -147,9 +148,9 @@ namespace Mirai.CSharp.Light.Session
 
 		public CommonMessageData GetMessage(int id, long target)
 		{
-			if (APIVersion < Version.Parse("2.6.0"))
+			if (APIVersion < new Version(2, 6, 0))
 			{
-				throw new System.Exception("API版本为2.6.0以下，请使用IMessageData GetMessage(int messageId)");
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，请使用IMessageData GetMessage(int messageId)");
 			}
 			var result = Get("messageFromId", new JObject()
 			{
@@ -157,39 +158,39 @@ namespace Mirai.CSharp.Light.Session
 				["id"] = id,
 				["target"] = target,
 			});
-			logger.Info($"[GetMessage] => Id:{id}, target:{target}");
+			logger.Info($"[GetMessage:id={id},target={target}] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return CommonMessageData.Parse((JObject)result["data"]);
 		}
 
 		public Task<CommonMessageData> GetMessageAsync(int id, long target) => Task.Run(() =>
 		{
-			if (APIVersion < Version.Parse("2.6.0"))
+			if (APIVersion < new Version(2, 6, 0))
 			{
-				throw new System.Exception("API版本为2.6.0以下，请使用Task<IMessageData> GetMessageAsync(int messageId)");
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，请使用Task<IMessageData> GetMessageAsync(int messageId)");
 			}
 			return GetMessage(id, target);
 		});
 
 		public CommonMessageData GetMessage(int messageId)
 		{
-			if (APIVersion >= Version.Parse("2.6.0"))
+			if (APIVersion >= new Version(2, 6, 0))
 			{
-				throw new System.Exception("API版本为2.6.0及以上，请使用IMessageData GetMessage(int id, long target)");
+				throw new MiraiException("MiraiSession", "API版本为2.6.0及以上，请使用IMessageData GetMessage(int id, long target)");
 			}
 			var result = Get("messageFromId", new JObject()
 			{
 				["sessionKey"] = SessionKey,
 				["id"] = messageId,
 			});
-			logger.Info($"[GetMessage] => Id:{messageId}");
+			logger.Info($"[GetMessage:messageId={messageId}] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return CommonMessageData.Parse((JObject)result["data"]);
 		}
 
 		public Task<CommonMessageData> GetMessageAsync(int messageId) => Task.Run(() =>
 		{
-			if (APIVersion >= Version.Parse("2.6.0"))
+			if (APIVersion >= new Version(2, 6, 0))
 			{
-				throw new System.Exception("API版本为2.6.0及以上，请使用Task<IMessageData> GetMessageAsync(int id, long target)");
+				throw new MiraiException("MiraiSession", "API版本为2.6.0及以上，请使用Task<IMessageData> GetMessageAsync(int id, long target)");
 			}
 			return GetMessage(messageId);
 		});
@@ -214,6 +215,7 @@ namespace Mirai.CSharp.Light.Session
 			{
 				array[i] = UserData.Parse((JObject)result["data"][i]);
 			}
+			logger.Debug($"[GetFriendList] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return array;
 		}
 
@@ -235,6 +237,7 @@ namespace Mirai.CSharp.Light.Session
 			{
 				array[i] = GroupData.Parse((JObject)result["data"][i]);
 			}
+			logger.Debug($"[GetGroupList] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return array;
 		}
 
@@ -257,6 +260,7 @@ namespace Mirai.CSharp.Light.Session
 			{
 				array[i] = GroupMemberData.Parse((JObject)result["data"][i]);
 			}
+			logger.Debug($"[GetGroupMemberList] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return array;
 		}
 
@@ -272,6 +276,7 @@ namespace Mirai.CSharp.Light.Session
 			{
 				["sessionKey"] = SessionKey,
 			});
+			logger.Info($"[GetBotProfile] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return UserProfileData.Parse(result);
 		}
 
@@ -288,6 +293,7 @@ namespace Mirai.CSharp.Light.Session
 				["sessionKey"] = SessionKey,
 				["target"] = target,
 			});
+			logger.Info($"[GetFriendProfile:target={target}] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return UserProfileData.Parse(result);
 		}
 
@@ -305,6 +311,7 @@ namespace Mirai.CSharp.Light.Session
 				["target"] = target,
 				["memberId"] = memberId,
 			});
+			logger.Info($"[GetGroupMemberProfile:target={target},memberId={memberId}] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return UserProfileData.Parse(result);
 		}
 
@@ -316,15 +323,27 @@ namespace Mirai.CSharp.Light.Session
 
 		public IUserProfileData GetUserProfile(long target)
 		{
+			if (APIVersion < new Version(2, 5, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.5.0以下，不支持获取QQ用户资料");
+			}
 			var result = Get("userProfile", new JObject()
 			{
 				["sessionKey"] = SessionKey,
 				["target"] = target,
 			});
+			logger.Info($"[GetUserProfile:target={target}] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return UserProfileData.Parse(result);
 		}
 
-		public Task<IUserProfileData> GetUserProfileAsync(long target) => Task.Run(() => GetUserProfileAsync(target));
+		public Task<IUserProfileData> GetUserProfileAsync(long target)
+		{
+			if (APIVersion < new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.5.0以下，不支持获取QQ用户资料");
+			}
+			return Task.Run(() => GetUserProfileAsync(target));
+		}
 
 		#endregion
 
@@ -347,7 +366,7 @@ namespace Mirai.CSharp.Light.Session
 				form["quote"] = quote;
 			}
 			var result = Post("sendFriendMessage", form);
-			logger.Info($"[Friend:{target}] <= MessageChain:{messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+			logger.Info($"[SendFriendMessage] <= target={target},messageChain={messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()},quote={quote}");
 			return (int)result["messageId"];
 		}
 
@@ -370,7 +389,7 @@ namespace Mirai.CSharp.Light.Session
 				form["quote"] = quote;
 			}
 			var result = Post("sendGroupMessage", form);
-			logger.Info($"[Group:{target}] <= MessageChain:{messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+			logger.Info($"[SendGroupMessage] <= target={target},messageChain={messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()},quote={quote}");
 			return (int)result["messageId"];
 		}
 
@@ -394,7 +413,7 @@ namespace Mirai.CSharp.Light.Session
 				form["quote"] = quote;
 			}
 			var result = Post("sendTempMessage", form);
-			logger.Info($"[Friend:{qq}] <= MessageChain:{messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+			logger.Info($"[SendTempMessage] <= qq={qq},group={group},messageChain={messageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()},quote={quote}");
 			return (int)result["messageId"];
 		}
 
@@ -402,13 +421,32 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
+		#region 发送头像戳一戳消息
+
+		public void SendNudge(long target, long subject, ContextType kind)
+		{
+			var form = new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["subject"] = subject,
+				["kind"] = kind.GetString(),
+			};
+			Post("sendTempMessage", form);
+			logger.Info($"[SendNudge] <= target={target},subject={subject},kind={kind.GetString()}");
+		}
+
+		public Task SendNudgeAsync(long target, long subject, ContextType kind) => Task.Run(() => SendNudge(target, subject, kind));
+
+		#endregion
+
 		#region 撤回消息
 
 		public void RevokeMessage(int messageId, long target)
 		{
-			if (APIVersion < Version.Parse("2.6.0"))
+			if (APIVersion < new Version(2, 6, 0))
 			{
-				throw new System.Exception("API版本为2.6.0以下，请使用void RevokeMessage(int messageId)");
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，请使用void RevokeMessage(int messageId)");
 			}
 			Post("recall", new JObject()
 			{
@@ -416,40 +454,94 @@ namespace Mirai.CSharp.Light.Session
 				["messageId"] = messageId,
 				["target"] = target,
 			});
-			logger.Info($"[Revoke] <= MessageId:{messageId}, Target:{target}");
+			logger.Info($"[RevokeMessage] <= messageId={messageId},target={target}");
 		}
 
 		public Task RevokeMessageAsync(int messageId, long target) => Task.Run(() =>
 		{
-			if (APIVersion < Version.Parse("2.6.0"))
+			if (APIVersion < new Version(2, 6, 0))
 			{
-				throw new System.Exception("API版本为2.6.0以下，请使用Task RevokeMessageAsync(int messageId)");
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，请使用Task RevokeMessageAsync(int messageId)");
 			}
 			RevokeMessage(messageId, target);
 		});
 
 		public void RevokeMessage(int messageId)
 		{
-			if (APIVersion >= Version.Parse("2.6.0"))
+			if (APIVersion >= new Version(2, 6, 0))
 			{
-				throw new System.Exception("API版本为2.6.0及以上，请使用void RevokeMessage(int messageId, long target)");
+				throw new MiraiException("MiraiSession", "API版本为2.6.0及以上，请使用void RevokeMessage(int messageId, long target)");
 			}
 			Post("recall", new JObject()
 			{
 				["sessionKey"] = SessionKey,
 				["target"] = messageId,
 			});
-			logger.Info($"[Revoke] <= target:{messageId}");
+			logger.Info($"[RevokeMessage] <= target={messageId}");
 		}
 
 		public Task RevokeMessageAsync(int messageId) => Task.Run(() =>
 		{
-			if (APIVersion >= Version.Parse("2.6.0"))
+			if (APIVersion >= new Version(2, 6, 0))
 			{
-				throw new System.Exception("API版本为2.6.0及以上，请使用Task RevokeMessageAsync(int messageId, long target)");
+				throw new MiraiException("MiraiSession", "API版本为2.6.0及以上，请使用Task RevokeMessageAsync(int messageId, long target)");
 			}
 			RevokeMessage(messageId);
 		});
+
+		#endregion
+
+		#region 获取漫游消息
+
+		public CommonMessageData[] GetRoamingMessages(long timeStart, long timeEnd, long target)
+		{
+			if (APIVersion < new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，不支持获取漫游消息");
+			}
+			var form = new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["timeStart"] = timeStart,
+				["timeEnd"] = timeEnd,
+				["target"] = target,
+			};
+			var result = Post("roamingMessages", form);
+			logger.Info($"[GetRoamingMessages:timeStart={timeStart},timeEnd={timeEnd},target={target}] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+			JArray array = (JArray)result["data"];
+			var data = new CommonMessageData[array.Count];
+			for (int i = 0; i < array.Count; i++)
+			{
+				data[i] = CommonMessageData.Parse((JObject)array[i]);
+			}
+			return data;
+		}
+
+		public Task<CommonMessageData[]> GetRoamingMessagesAsync(long timeStart, long timeEnd, long target)
+		{
+			if (APIVersion < new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，不支持获取漫游消息");
+			}
+			return Task.Run(() => GetRoamingMessages(timeStart, timeEnd, target));
+		}
+
+		public CommonMessageData[] GetRoamingMessages(DateTime timeStart, DateTime timeEnd, long target)
+		{
+			if (APIVersion < new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，不支持获取漫游消息");
+			}
+			return GetRoamingMessages(timeStart.ToTimestamp(), timeEnd.ToTimestamp(), target);
+		}
+
+		public Task<CommonMessageData[]> GetRoamingMessagesAsync(DateTime timeStart, DateTime timeEnd, long target) {
+			if (APIVersion < new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，不支持获取漫游消息");
+			}
+			return GetRoamingMessagesAsync(timeStart.ToTimestamp(), timeEnd.ToTimestamp(), target);
+		}
 
 		#endregion
 
@@ -459,7 +551,7 @@ namespace Mirai.CSharp.Light.Session
 
 		#region 图片文件上传
 
-		public ImageMessage UploadImage(UploadType type, string path)
+		public ImageMessage UploadImage(ContextType type, string path)
 		{
 			var result = Post("uploadImage", new MultipartFormDataContent
 			{
@@ -471,7 +563,7 @@ namespace Mirai.CSharp.Light.Session
 			return new ImageMessage((string)result["imageId"], (string)result["url"], null, null);
 		}
 
-		public Task<ImageMessage> UploadImageAsync(UploadType type, string path) => Task.Run(() => UploadImage(type, path));
+		public Task<ImageMessage> UploadImageAsync(ContextType type, string path) => Task.Run(() => UploadImage(type, path));
 
 		#endregion
 

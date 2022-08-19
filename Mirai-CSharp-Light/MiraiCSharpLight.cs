@@ -65,13 +65,12 @@ namespace Mirai.CSharp.Light
 		/// 连接到Mirai-Api-Http，连接即视为开始运行
 		/// </summary>
 		/// <param name="url">Mirai-Api-Http服务的URL，例如"http://0.0.0.0:12345"</param>
-		/// <exception cref="System.Exception"></exception>
 		/// <exception cref="MiraiException"></exception>
 		public void Connect(string url)
 		{
 			if (QQ == 0)
 			{
-				throw new System.Exception("未设置Bot的QQ号");
+				throw new MiraiException("MiraiCSharpLight", "未设置Bot的QQ号");
 			}
 			miraiSession = new()
 			{
@@ -82,51 +81,42 @@ namespace Mirai.CSharp.Light
 			};
 			isAlive = true;
 			JObject result;
-			try
+			result = miraiSession.Post("verify", new JObject()
 			{
-				result = miraiSession.Post("verify", new JObject()
-				{
-					["verifyKey"] = VerifyKey,
-				});
-				miraiSession.SessionKey = (string)result["session"];
-				logger.Info($"VerifyKey验证成功，SessionKey：{miraiSession.SessionKey}");
-				miraiSession.Post("bind", new JObject()
-				{
-					["sessionKey"] = miraiSession.SessionKey,
-					["qq"] = QQ,
-				});
-				logger.Info($"绑定QQ[{QQ}]成功");
-				result = miraiSession.Get("sessionInfo", new JObject()
-				{
-					["sessionKey"] = miraiSession.SessionKey,
-				});
-				miraiSession.BotData_ = UserData.Parse((JObject)result["data"]["qq"]);
-				result = miraiSession.Get("about");
-				var ver = (string)result["data"]["version"];
-				if (ver.StartsWith('v'))
-				{
-					ver = ver.Substring(1);
-				}
-				miraiSession.APIVersion = Version.Parse(ver);
-				logger.Info($"获取到Mirai-Api-Http版本：{miraiSession.APIVersion}");
-				if (miraiSession.APIVersion < Version.Parse("2.4.0"))
-				{
-					logger.Warning("Mirai-Api-Http版本低于2.4.0，部分功能可能导致异常");
-				}
-				StartMessageLoop();
-			}
-			catch (System.Exception ex)
+				["verifyKey"] = VerifyKey,
+			});
+			miraiSession.SessionKey = (string)result["session"];
+			logger.Info($"VerifyKey验证成功，SessionKey：{miraiSession.SessionKey}");
+			miraiSession.Post("bind", new JObject()
 			{
-				logger.Error("Mirai.CSharp.Light.MiraiCSharpLight.Connect执行异常");
-				logger.Error(ex.ToString());
+				["sessionKey"] = miraiSession.SessionKey,
+				["qq"] = QQ,
+			});
+			logger.Info($"绑定QQ[{QQ}]成功");
+			result = miraiSession.Get("sessionInfo", new JObject()
+			{
+				["sessionKey"] = miraiSession.SessionKey,
+			});
+			miraiSession.BotData_ = UserData.Parse((JObject)result["data"]["qq"]);
+			result = miraiSession.Get("about");
+			var ver = (string)result["data"]["version"];
+			if (ver.StartsWith('v'))
+			{
+				ver = ver.Substring(1);
 			}
+			miraiSession.APIVersion = Version.Parse(ver);
+			logger.Info($"获取到Mirai-Api-Http版本：{miraiSession.APIVersion}");
+			if (miraiSession.APIVersion < Version.Parse("2.4.0"))
+			{
+				logger.Warning("Mirai-Api-Http版本低于2.4.0，部分功能可能导致异常");
+			}
+			StartMessageLoop();
 		}
 
 		/// <summary>
 		/// 异步连接到Mirai-Api-Http，连接即视为开始运行
 		/// </summary>
 		/// <param name="url">Mirai-Api-Http服务的URL，例如"http://0.0.0.0:12345"</param>
-		/// <exception cref="System.Exception"></exception>
 		/// <exception cref="MiraiException"></exception>
 		public Task ConnectAsync(string url) => Task.Run(() => Connect(url));
 
@@ -151,28 +141,19 @@ namespace Mirai.CSharp.Light
 		/// <summary>
 		/// 释放MiraiLight相关资源
 		/// </summary>
-		/// <exception cref="System.Exception"></exception>
 		/// <exception cref="MiraiException"></exception>
 		public void Release()
 		{
-			try
+			StopMessageLoop();
+			miraiSession.Post("release", new JObject()
 			{
-				StopMessageLoop();
-				miraiSession.Post("release", new JObject()
-				{
-					["sessionKey"] = miraiSession.SessionKey,
-					["qq"] = QQ,
-				});
-				logger.Info("发送Release给Mirai-Api-Http成功");
-				miraiSession = null;
-				isAlive = false;
-				logger.Info("成功释放本地资源");
-			}
-			catch (System.Exception ex)
-			{
-				logger.Error("Mirai.CSharp.Light.MiraiCSharpLight.Release执行异常");
-				logger.Error(ex.ToString());
-			}
+				["sessionKey"] = miraiSession.SessionKey,
+				["qq"] = QQ,
+			});
+			logger.Info("发送Release给Mirai-Api-Http成功");
+			miraiSession = null;
+			isAlive = false;
+			logger.Info("成功释放本地资源");
 		}
 
 		private Thread? MessageLoopThread;
@@ -204,33 +185,25 @@ namespace Mirai.CSharp.Light
 		{
 			while (!MessageLoopExit)
 			{
-				try
+				var result = miraiSession.Get("countMessage", new JObject()
 				{
-					var result = miraiSession.Get("countMessage", new JObject()
+					["sessionKey"] = MiraiSession.SessionKey,
+				});
+				var count = (int)result["data"];
+				if (count > 0)
+				{
+					var result2 = miraiSession.Get("fetchMessage", new JObject()
 					{
 						["sessionKey"] = MiraiSession.SessionKey,
+						["count"] = count,
 					});
-					var count = (int)result["data"];
-					if (count > 0)
+					foreach (var item in (JArray)result2["data"])
 					{
-						var result2 = miraiSession.Get("fetchMessage", new JObject()
-						{
-							["sessionKey"] = MiraiSession.SessionKey,
-							["count"] = count,
-						});
-						foreach (var item in (JArray)result2["data"])
-						{
-							HandleMessage((JObject)item);
-						}
+						HandleMessage((JObject)item);
 					}
+				}
 
-					Thread.Sleep(100);
-				}
-				catch (System.Exception ex)
-				{
-					logger.Error("Mirai.CSharp.Light.MiraiCSharpLight.MessageLoopFunc执行异常");
-					logger.Error(ex.ToString());
-				}
+				Thread.Sleep(100);
 			}
 		}
 

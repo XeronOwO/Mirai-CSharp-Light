@@ -1,4 +1,5 @@
-﻿using Mirai.CSharp.Light.Models;
+﻿using Mirai.CSharp.Light.Exception;
+using Mirai.CSharp.Light.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Mirai.CSharp.Light.Extensions
 				GroupPermission.Member => "MEMBER",
 				GroupPermission.Administrator => "ADMINISTRATOR",
 				GroupPermission.Owner => "OWNER",
-				_ => throw new System.Exception("GroupPermission转换成字符串失败"),
+				_ => throw new MiraiException("GroupPermissionExtension", "GroupPermission转换成字符串失败"),
 			};
 		}
 	}

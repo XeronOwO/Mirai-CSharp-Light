@@ -1,5 +1,6 @@
 ﻿using Mirai.CSharp.Light.Exception;
 using Mirai.CSharp.Light.Extensions;
+using Mirai.CSharp.Light.Models;
 using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Models.Message;
 using Newtonsoft.Json.Linq;
@@ -246,10 +247,10 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
-		#region 发送临时消息
+		#region 发送临时会话消息
 
 		/// <summary>
-		/// 发送临时消息
+		/// 发送临时会话消息
 		/// </summary>
 		/// <param name="qq">临时会话对象QQ号</param>
 		/// <param name="group">临时会话群号</param>
@@ -260,7 +261,7 @@ namespace Mirai.CSharp.Light.Session
 		public int SendTempMessage(long qq, long group, IChatMessage[] messageChain, int? quote = null);
 
 		/// <summary>
-		/// 异步发送临时消息
+		/// 异步发送临时会话消息
 		/// </summary>
 		/// <param name="qq">临时会话对象QQ号</param>
 		/// <param name="group">临时会话群号</param>
@@ -268,6 +269,29 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="quote">引用一条消息的消息ID进行回复</param>
 		/// <returns>Task实例，其Result为消息ID</returns>
 		public Task<int> SendTempMessageAsync(long qq, long group, IChatMessage[] messageChain, int? quote = null);
+
+		#endregion
+
+		#region 发送头像戳一戳消息
+
+		/// <summary>
+		/// 发送头像戳一戳消息
+		/// </summary>
+		/// <param name="target">戳一戳的目标, QQ号, 可以为 Bot QQ号</param>
+		/// <param name="subject">戳一戳接受主体(上下文), 戳一戳信息会发送至该主体, 为群号/好友QQ号</param>
+		/// <param name="kind">上下文类型, 可选值 Friend, Group, Stranger</param>
+		/// <exception cref="MiraiException"></exception>
+		/// <returns>消息ID</returns>
+		public void SendNudge(long target, long subject, ContextType kind);
+
+		/// <summary>
+		/// 异步发送头像戳一戳消息
+		/// </summary>
+		/// <param name="target">戳一戳的目标, QQ号, 可以为 Bot QQ号</param>
+		/// <param name="subject">戳一戳接受主体(上下文), 戳一戳信息会发送至该主体, 为群号/好友QQ号</param>
+		/// <param name="kind">上下文类型, 可选值 Friend, Group, Stranger</param>
+		/// <returns>Task实例</returns>
+		public Task SendNudgeAsync(long target, long subject, ContextType kind);
 
 		#endregion
 
@@ -305,6 +329,46 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
+		#region 获取漫游消息
+
+		/// <summary>
+		/// 获取漫游消息
+		/// </summary>
+		/// <param name="timeStart">起始时间, UTC+8 时间戳, 单位为秒. 可以为 0, 即表示从可以获取的最早的消息起. 负数将会被看是 0.</param>
+		/// <param name="timeEnd">结束时间, UTC+8 时间戳, 单位为秒. 可以为 Long.MAX_VALUE, 即表示到可以获取的最晚的消息为止. 低于 timeStart 的值将会被看作是 timeStart 的值.</param>
+		/// <param name="target">漫游消息对象，好友id，目前仅支持好友漫游消息</param>
+		/// <returns>消息链数组</returns>
+		public CommonMessageData[] GetRoamingMessages(long timeStart, long timeEnd, long target);
+
+		/// <summary>
+		/// 异步获取漫游消息
+		/// </summary>
+		/// <param name="timeStart">起始时间, UTC+8 时间戳, 单位为秒. 可以为 0, 即表示从可以获取的最早的消息起. 负数将会被看是 0.</param>
+		/// <param name="timeEnd">结束时间, UTC+8 时间戳, 单位为秒. 可以为 Long.MAX_VALUE, 即表示到可以获取的最晚的消息为止. 低于 timeStart 的值将会被看作是 timeStart 的值.</param>
+		/// <param name="target">漫游消息对象，好友id，目前仅支持好友漫游消息</param>
+		/// <returns>Task实例，其Result为消息链数组</returns>
+		public Task<CommonMessageData[]> GetRoamingMessagesAsync(long timeStart, long timeEnd, long target);
+
+		/// <summary>
+		/// 获取漫游消息
+		/// </summary>
+		/// <param name="timeStart">起始时间</param>
+		/// <param name="timeEnd">结束时间</param>
+		/// <param name="target">漫游消息对象，好友id，目前仅支持好友漫游消息</param>
+		/// <returns>消息链数组</returns>
+		public CommonMessageData[] GetRoamingMessages(DateTime timeStart, DateTime timeEnd, long target);
+
+		/// <summary>
+		/// 异步获取漫游消息
+		/// </summary>
+		/// <param name="timeStart">起始时间</param>
+		/// <param name="timeEnd">结束时间</param>
+		/// <param name="target">漫游消息对象，好友id，目前仅支持好友漫游消息</param>
+		/// <returns>Task实例，其Result为消息链数组</returns>
+		public Task<CommonMessageData[]> GetRoamingMessagesAsync(DateTime timeStart, DateTime timeEnd, long target);
+
+		#endregion
+
 		#endregion
 
 		#region 多媒体内容上传
@@ -317,7 +381,7 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="type">上传文件的类别</param>
 		/// <param name="path">文件路径（相对于MCL目录的路径，或者使用绝对路径）</param>
 		/// <returns>图片消息</returns>
-		public ImageMessage UploadImage(UploadType type, string path);
+		public ImageMessage UploadImage(ContextType type, string path);
 
 		/// <summary>
 		/// 异步上传图片
@@ -325,7 +389,7 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="type">上传文件的类别</param>
 		/// <param name="path">文件路径（相对于MCL目录的路径，或者使用绝对路径）</param>
 		/// <returns>Task实例，其Result为图片消息</returns>
-		public Task<ImageMessage> UploadImageAsync(UploadType type, string path);
+		public Task<ImageMessage> UploadImageAsync(ContextType type, string path);
 
 		#endregion
 

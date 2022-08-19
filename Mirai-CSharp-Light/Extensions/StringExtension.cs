@@ -1,4 +1,5 @@
-﻿using Mirai.CSharp.Light.Models;
+﻿using Mirai.CSharp.Light.Exception;
+using Mirai.CSharp.Light.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Mirai.CSharp.Light.Extensions
 			{
 				return GroupPermission.Owner;
 			}
-			throw new System.Exception("字符串解析成GroupPermission失败");
+			throw new MiraiException("StringExtension", "字符串解析成GroupPermission失败");
 		}
 
 		public static Sex ToSex(this string s)
@@ -40,7 +41,7 @@ namespace Mirai.CSharp.Light.Extensions
 			{
 				return Sex.Female;
 			}
-			throw new System.Exception("字符串解析成Sex失败");
+			throw new MiraiException("StringExtension", "字符串解析成Sex失败");
 		}
 
 		public static string ReplaceReturn(this string str)

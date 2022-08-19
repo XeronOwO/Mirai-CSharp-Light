@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirai.CSharp.Light.Exception;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,7 +39,7 @@ namespace Mirai.CSharp.Light.Logger
 					Console.ForegroundColor = ConsoleColor.Red;
 					break;
 				default:
-					throw new System.Exception("未知日志类型");
+					throw new MiraiException("MiraiCSharpLightLogger", "未知日志类型");
 			}
 			sb.Append(" ");
 			if (name != null)
