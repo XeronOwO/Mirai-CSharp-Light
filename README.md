@@ -85,6 +85,11 @@
 		<td>GetRoamingMessages(Async)</td>
 	</tr>
 	<tr>
+		<td>账号管理</td>
+		<td>删除好友</td>
+		<td>DeleteFriend(Async)</td>
+	</tr>
+	<tr>
 		<td rowspan="1">多媒体内容上传</td>
 		<td>图片文件上传</td>
 		<td>UploadImage(Async)</td>
