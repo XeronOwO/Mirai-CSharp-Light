@@ -281,7 +281,6 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="subject">戳一戳接受主体(上下文), 戳一戳信息会发送至该主体, 为群号/好友QQ号</param>
 		/// <param name="kind">上下文类型, 可选值 Friend, Group, Stranger</param>
 		/// <exception cref="MiraiException"></exception>
-		/// <returns>消息ID</returns>
 		public void SendNudge(long target, long subject, ContextType kind);
 
 		/// <summary>
@@ -337,6 +336,7 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="timeStart">起始时间, UTC+8 时间戳, 单位为秒. 可以为 0, 即表示从可以获取的最早的消息起. 负数将会被看是 0.</param>
 		/// <param name="timeEnd">结束时间, UTC+8 时间戳, 单位为秒. 可以为 Long.MAX_VALUE, 即表示到可以获取的最晚的消息为止. 低于 timeStart 的值将会被看作是 timeStart 的值.</param>
 		/// <param name="target">漫游消息对象，好友id，目前仅支持好友漫游消息</param>
+		/// <exception cref="MiraiException"></exception>
 		/// <returns>消息链数组</returns>
 		public CommonMessageData[] GetRoamingMessages(long timeStart, long timeEnd, long target);
 
@@ -366,6 +366,28 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="target">漫游消息对象，好友id，目前仅支持好友漫游消息</param>
 		/// <returns>Task实例，其Result为消息链数组</returns>
 		public Task<CommonMessageData[]> GetRoamingMessagesAsync(DateTime timeStart, DateTime timeEnd, long target);
+
+		#endregion
+
+		#endregion
+
+		#region 账号管理
+
+		#region 删除好友
+
+		/// <summary>
+		/// 删除好友
+		/// </summary>
+		/// <param name="target">删除好友的QQ号码</param>
+		/// <exception cref="MiraiException"></exception>
+		public void DeleteFriend(long target);
+
+		/// <summary>
+		/// 异步删除好友
+		/// </summary>
+		/// <param name="target">删除好友的QQ号码</param>
+		/// <returns>Task实例</returns>
+		public Task DeleteFriendAsync(long target);
 
 		#endregion
 

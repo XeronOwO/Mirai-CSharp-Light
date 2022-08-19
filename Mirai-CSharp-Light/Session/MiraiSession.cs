@@ -501,7 +501,7 @@ namespace Mirai.CSharp.Light.Session
 			}
 			var form = new JObject()
 			{
-				["sessionKey"] = SessionKey,
+				//["sessionKey"] = SessionKey,
 				["timeStart"] = timeStart,
 				["timeEnd"] = timeEnd,
 				["target"] = target,
@@ -542,6 +542,26 @@ namespace Mirai.CSharp.Light.Session
 			}
 			return GetRoamingMessagesAsync(timeStart.ToTimestamp(), timeEnd.ToTimestamp(), target);
 		}
+
+		#endregion
+
+		#endregion
+
+		#region 账号管理
+
+		#region 删除好友
+
+		public void DeleteFriend(long target)
+		{
+			Post("deleteFriend", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+			});
+			logger.Info($"[DeleteFriend] <= target={target}");
+		}
+
+		public Task DeleteFriendAsync(long target) => Task.Run(() => DeleteFriend(target));
 
 		#endregion
 
