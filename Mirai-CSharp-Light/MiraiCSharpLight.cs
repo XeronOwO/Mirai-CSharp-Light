@@ -59,7 +59,7 @@ namespace Mirai.CSharp.Light
 			handlers.Remove(handler);
 		}
 
-		private MiraiCSharpLightLogger logger = MiraiCSharpLightLogger.GetLogger("MiraiCSharpLight");
+		private readonly MiraiCSharpLightLogger logger = MiraiCSharpLightLogger.GetLogger("MiraiCSharpLight");
 
 		/// <summary>
 		/// 连接到Mirai-Api-Http，连接即视为开始运行

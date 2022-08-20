@@ -4,6 +4,7 @@ using Mirai.CSharp.Light.Logger;
 using Mirai.CSharp.Light.Models;
 using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Models.Message;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -171,7 +172,7 @@ namespace Mirai.CSharp.Light.Session
 			return GetMessage(id, target);
 		});
 
-		public CommonMessageData GetMessage(int messageId)
+		public CommonMessageData GetMessage(int id)
 		{
 			if (APIVersion >= new Version(2, 6, 0))
 			{
@@ -180,19 +181,19 @@ namespace Mirai.CSharp.Light.Session
 			var result = Get("messageFromId", new JObject()
 			{
 				["sessionKey"] = SessionKey,
-				["id"] = messageId,
+				["id"] = id,
 			});
-			logger.Info($"[GetMessage:messageId={messageId}] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+			logger.Info($"[GetMessage:messageId={id}] => {result.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 			return CommonMessageData.Parse((JObject)result["data"]);
 		}
 
-		public Task<CommonMessageData> GetMessageAsync(int messageId) => Task.Run(() =>
+		public Task<CommonMessageData> GetMessageAsync(int id) => Task.Run(() =>
 		{
 			if (APIVersion >= new Version(2, 6, 0))
 			{
 				throw new MiraiException("MiraiSession", "API版本为2.6.0及以上，请使用Task<IMessageData> GetMessageAsync(int id, long target)");
 			}
-			return GetMessage(messageId);
+			return GetMessage(id);
 		});
 
 		#endregion
@@ -562,6 +563,263 @@ namespace Mirai.CSharp.Light.Session
 		}
 
 		public Task DeleteFriendAsync(long target) => Task.Run(() => DeleteFriend(target));
+
+		#endregion
+
+		#endregion
+
+		#region 群管理
+
+		#region 禁言群成员
+
+		public void Mute(long target, long memberId, int time)
+		{
+			Post("mute", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["memberId"] = memberId,
+				["time"] = time,
+			});
+			logger.Info($"[Mute] <= target={target},memberId={memberId},time={time}");
+		}
+
+		public Task MuteAsync(long target, long memberId, int time) => Task.Run(() => Mute(target, memberId, time));
+
+		public void Mute(long target, long memberId, DateTime time) => Mute(target, memberId, (int)new TimeSpan(time.Ticks).TotalSeconds);
+
+		public Task MuteAsync(long target, long memberId, DateTime time) => Task.Run(() => Mute(target, memberId, time));
+
+		#endregion
+
+		#region 解除群成员禁言
+
+		public void Unmute(long target, long memberId)
+		{
+			Post("unmute", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["memberId"] = memberId,
+			});
+			logger.Info($"[Unmute] <= target={target},memberId={memberId}");
+		}
+
+		public Task UnmuteAsync(long target, long memberId) => Task.Run(() => Unmute(target, memberId));
+
+		#endregion
+
+		#region 移除群成员
+
+		public void Kick(long target, long memberId, string msg)
+		{
+			Post("kick", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["memberId"] = memberId,
+				["msg"] = msg,
+			});
+			logger.Info($"[Kick] <= target={target},memberId={memberId},msg={msg}");
+		}
+
+		public Task KickAsync(long target, long memberId, string msg) => Task.Run(() => Kick(target, memberId, msg));
+
+		#endregion
+
+		#region 退出群聊
+
+		public void Quit(long target)
+		{
+			Post("quit", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+			});
+			logger.Info($"[Quit] <= target={target}");
+		}
+
+		public Task QuitAsync(long target) => Task.Run(() => Quit(target));
+
+		#endregion
+
+		#region 全体禁言
+
+		public void MuteAll(long target)
+		{
+			Post("muteAll", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+			});
+			logger.Info($"[MuteAll] <= target={target}");
+		}
+
+		public Task MuteAllAsync(long target) => Task.Run(() => MuteAll(target));
+
+		#endregion
+
+		#region 解除全体禁言
+
+		public void UnmuteAll(long target)
+		{
+			Post("unmuteAll", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+			});
+			logger.Info($"[UnmuteAll] <= target={target}");
+		}
+
+		public Task UnmuteAllAsync(long target) => Task.Run(() => MuteAll(target));
+
+		#endregion
+
+		#region 设置群精华消息
+
+		public void SetEssence(int messageId, long target)
+		{
+			if (APIVersion < new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，请使用void SetEssence(int target)");
+			}
+			Post("setEssence", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["messageId"] = messageId,
+				["target"] = target,
+			});
+			logger.Info($"[SetEssence] <= messageId={messageId},target={target}");
+		}
+
+		public Task SetEssenceAsync(int messageId, long target)
+		{
+			if (APIVersion < new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，请使用Task SetEssenceAsync(int target)");
+			}
+			return Task.Run(() => SetEssence(messageId, target));
+		}
+
+		public void SetEssence(int target)
+		{
+			if (APIVersion >= new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.6.0及以上，请使用void SetEssence(int messageId, long target)");
+			}
+			Post("setEssence", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+			});
+			logger.Info($"[SetEssence] <= target={target}");
+		}
+
+		public Task SetEssenceAsync(int target)
+		{
+			if (APIVersion >= new Version(2, 6, 0))
+			{
+				throw new MiraiException("MiraiSession", "API版本为2.6.0及以上，请使用Task SetEssenceAsync(int messageId, long target)");
+			}
+			return Task.Run(() => SetEssence(target));
+		}
+
+		#endregion
+
+		#region 获取群设置
+
+		public GroupConfigData GetGroupConfig(long target)
+		{
+			var result = Get("groupConfig", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+			});
+			logger.Info($"[GetGroupConfig:target={target}] => {result.ToString(Formatting.None).ReplaceReturn()}");
+			return GroupConfigData.Parse(result);
+		}
+
+		public Task<GroupConfigData> GetGroupConfigAsync(long target) => Task.Run(() => GetGroupConfig(target));
+
+		#endregion
+
+		#region 修改群设置
+
+		public void SetGroupConfig(long target, GroupConfigData config)
+		{
+			Post("groupConfig", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["config"] = config.ToJObject(),
+			});
+			logger.Info($"[SetGroupConfig] <= target={target},config={config.ToJObject().ToString(Formatting.None)}");
+		}
+
+		public Task SetGroupConfigAsync(long target, GroupConfigData config) => Task.Run(() => SetGroupConfig(target, config));
+
+		#endregion
+
+		#region 获取群员设置
+
+		public IGroupMemberData GetMemberInfo(long target, long memberId)
+		{
+			var result = Get("memberInfo", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["memberId"] = memberId,
+			});
+			logger.Info($"[GetMemberInfo:target={target},memberId={memberId}] => {result.ToString(Formatting.None).ReplaceReturn()}");
+			return GroupMemberData.Parse(result);
+		}
+
+		public Task<IGroupMemberData> GetMemberInfoAsync(long target, long memberId) => Task.Run(() => GetMemberInfo(target, memberId));
+
+		#endregion
+
+		#region 修改群员设置
+
+		public void SetMemberInfo(long target, long memberId, GroupMemberDataSet config)
+		{
+			var info = new JObject();
+			if (config.name != null)
+			{
+				info["name"] = config.name;
+			}
+			if (config.specialTitle != null)
+			{
+				info["specialTitle"] = config.specialTitle;
+			}
+			Post("memberInfo", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["memberId"] = memberId,
+				["info"] = info,
+			});
+			logger.Info($"[SetMemberInfo] <= target={target},memberId={memberId},config={info.ToString(Formatting.None)}");
+		}
+
+		public Task SetMemberInfoAsync(long target, long memberId, GroupMemberDataSet config) => Task.Run(() => SetMemberInfo(target, memberId, config));
+
+		#endregion
+
+		#region 修改群员管理员
+
+		public void SetMemberAdmin(long target, long memberId, bool assign)
+		{
+			Post("memberAdmin", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["target"] = target,
+				["memberId"] = memberId,
+				["assign"] = assign,
+			});
+			logger.Info($"[SetMemberAdmin] <= target={target},memberId={memberId},assign={assign}");
+		}
+
+		public Task SetMemberAdminAsync(long target, long memberId, bool assign) => Task.Run(() => SetMemberAdmin(target, memberId, assign));
 
 		#endregion
 

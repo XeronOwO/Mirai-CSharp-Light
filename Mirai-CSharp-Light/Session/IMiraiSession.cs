@@ -57,17 +57,17 @@ namespace Mirai.CSharp.Light.Session
 		/// <summary>
 		/// 通过消息ID获取消息（APIVersion &lt; 2.6.0）
 		/// </summary>
-		/// <param name="messageId">消息ID</param>
+		/// <param name="id">消息ID</param>
 		/// <returns>消息事件参数</returns>
 		/// <exception cref="MiraiException"></exception>
-		public CommonMessageData GetMessage(int messageId);
+		public CommonMessageData GetMessage(int id);
 
 		/// <summary>
 		/// 通过消息ID获取消息（APIVersion &lt; 2.6.0）
 		/// </summary>
-		/// <param name="messageId">消息ID</param>
+		/// <param name="id">消息ID</param>
 		/// <returns>Task实例，其Result为消息事件参数</returns>
-		public Task<CommonMessageData> GetMessageAsync(int messageId);
+		public Task<CommonMessageData> GetMessageAsync(int id);
 
 		#endregion
 
@@ -388,6 +388,281 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="target">删除好友的QQ号码</param>
 		/// <returns>Task实例</returns>
 		public Task DeleteFriendAsync(long target);
+
+		#endregion
+
+		#endregion
+
+		#region 群管理
+
+		#region 禁言群成员
+
+		/// <summary>
+		/// 禁言群成员
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">指定群员QQ号</param>
+		/// <param name="time">禁言时长，单位为秒，最多30天，默认为0</param>
+		/// <exception cref="MiraiException"></exception>
+		public void Mute(long target, long memberId, int time);
+
+		/// <summary>
+		/// 异步禁言群成员
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">指定群员QQ号</param>
+		/// <param name="time">禁言时长，单位为秒，最多30天，默认为0</param>
+		/// <returns>Task实例</returns>
+		public Task MuteAsync(long target, long memberId, int time);
+
+		/// <summary>
+		/// 禁言群成员
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">指定群员QQ号</param>
+		/// <param name="time">禁言时长，单位为秒，最多30天，默认为0</param>
+		/// <exception cref="MiraiException"></exception>
+		public void Mute(long target, long memberId, DateTime time);
+
+		/// <summary>
+		/// 异步禁言群成员
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">指定群员QQ号</param>
+		/// <param name="time">禁言时长，单位为秒，最多30天，默认为0</param>
+		/// <returns>Task实例</returns>
+		public Task MuteAsync(long target, long memberId, DateTime time);
+
+		#endregion
+
+		#region 解除群成员禁言
+
+		/// <summary>
+		/// 解除群成员禁言
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">指定群员QQ号</param>
+		/// <exception cref="MiraiException"></exception>
+		public void Unmute(long target, long memberId);
+
+		/// <summary>
+		/// 异步解除群成员禁言
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">指定群员QQ号</param>
+		/// <returns>Task实例</returns>
+		public Task UnmuteAsync(long target, long memberId);
+
+		#endregion
+
+		#region 移除群成员
+
+		/// <summary>
+		/// 移除群成员
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">指定群员QQ号</param>
+		/// <param name="msg">信息</param>
+		/// <exception cref="MiraiException"></exception>
+		public void Kick(long target, long memberId, string msg = "");
+
+		/// <summary>
+		/// 异步移除群成员
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">指定群员QQ号</param>
+		/// <param name="msg">信息</param>
+		/// <returns>Task实例</returns>
+		public Task KickAsync(long target, long memberId, string msg = "");
+
+		#endregion
+
+		#region 退出群聊
+
+		/// <summary>
+		/// 退出群聊
+		/// </summary>
+		/// <param name="target">退出的群号</param>
+		/// <remarks>bot为该群群主时退出失败并返回code 10(无操作权限)</remarks>
+		/// <exception cref="MiraiException"></exception>
+		public void Quit(long target);
+
+		/// <summary>
+		/// 异步退出群聊
+		/// </summary>
+		/// <param name="target">退出的群号</param>
+		/// <remarks>bot为该群群主时退出失败并返回code 10(无操作权限)</remarks>
+		/// <returns>Task实例</returns>
+		public Task QuitAsync(long target);
+
+		#endregion
+
+		#region 全体禁言
+
+		/// <summary>
+		/// 全体禁言
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <exception cref="MiraiException"></exception>
+		public void MuteAll(long target);
+
+		/// <summary>
+		/// 异步全体禁言
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <returns>Task实例</returns>
+		public Task MuteAllAsync(long target);
+
+		#endregion
+
+		#region 解除全体禁言
+
+		/// <summary>
+		/// 解除全体禁言
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <exception cref="MiraiException"></exception>
+		public void UnmuteAll(long target);
+
+		/// <summary>
+		/// 异步解除全体禁言
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <returns>Task实例</returns>
+		public Task UnmuteAllAsync(long target);
+
+		#endregion
+
+		#region 设置群精华消息
+
+		/// <summary>
+		/// 设置群精华消息（APIVersion &gt;= 2.6.0）
+		/// </summary>
+		/// <param name="messageId">精华消息的messageId</param>
+		/// <param name="target">群ID</param>
+		/// <exception cref="MiraiException"></exception>
+		public void SetEssence(int messageId, long target);
+
+		/// <summary>
+		/// 异步设置群精华消息（APIVersion &gt;= 2.6.0）
+		/// </summary>
+		/// <param name="messageId">获取消息的消息ID</param>
+		/// <param name="target">好友ID或群ID</param>
+		/// <returns>Task实例</returns>
+		public Task SetEssenceAsync(int messageId, long target);
+
+		/// <summary>
+		/// 设置群精华消息（APIVersion &lt; 2.6.0）
+		/// </summary>
+		/// <param name="target">消息ID</param>
+		/// <exception cref="MiraiException"></exception>
+		public void SetEssence(int target);
+
+		/// <summary>
+		/// 异步设置群精华消息（APIVersion &lt; 2.6.0）
+		/// </summary>
+		/// <param name="target">消息ID</param>
+		/// <returns>Task实例</returns>
+		public Task SetEssenceAsync(int target);
+
+		#endregion
+
+		#region 获取群设置
+
+		/// <summary>
+		/// 获取群设置
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <returns>群设置</returns>
+		public GroupConfigData GetGroupConfig(long target);
+
+		/// <summary>
+		/// 异步获取群设置
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <returns>Task实例，其Result为群设置</returns>
+		public Task<GroupConfigData> GetGroupConfigAsync(long target);
+
+		#endregion
+
+		#region 修改群设置
+
+		/// <summary>
+		/// 修改群设置
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="config">群设置</param>
+		public void SetGroupConfig(long target, GroupConfigData config);
+
+		/// <summary>
+		/// 异步修改群设置
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="config">群设置</param>
+		/// <returns>Task实例</returns>
+		public Task SetGroupConfigAsync(long target, GroupConfigData config);
+
+		#endregion
+
+		#region 获取群员设置
+
+		/// <summary>
+		/// 获取群员设置
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">群员QQ号</param>
+		/// <returns>群员设置</returns>
+		public IGroupMemberData GetMemberInfo(long target, long memberId);
+
+		/// <summary>
+		/// 异步获取群员设置
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">群员QQ号</param>
+		/// <returns>Task实例，其Result为获取群员设置</returns>
+		public Task<IGroupMemberData> GetMemberInfoAsync(long target, long memberId);
+
+		#endregion
+
+		#region 修改群员设置
+
+		/// <summary>
+		/// 修改群员设置
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">群员QQ号</param>
+		/// <param name="config">设置</param>
+		public void SetMemberInfo(long target, long memberId, GroupMemberDataSet config);
+
+		/// <summary>
+		/// 异步修改群员设置
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">群员QQ号</param>
+		/// <param name="config">设置</param>
+		/// <returns>Task实例</returns>
+		public Task SetMemberInfoAsync(long target, long memberId, GroupMemberDataSet config);
+
+		#endregion
+
+		#region 修改群员管理员
+
+		/// <summary>
+		/// 修改群员管理员
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">群员QQ号</param>
+		/// <param name="assign">是否设置为管理员</param>
+		public void SetMemberAdmin(long target, long memberId, bool assign);
+
+		/// <summary>
+		/// 异步修改群员管理员
+		/// </summary>
+		/// <param name="target">指定群的群号</param>
+		/// <param name="memberId">群员QQ号</param>
+		/// <param name="assign">是否设置为管理员</param>
+		/// <returns>Task实例</returns>
+		public Task SetMemberAdminAsync(long target, long memberId, bool assign);
 
 		#endregion
 

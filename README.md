@@ -25,7 +25,7 @@
 		<th>对应的函数或接口</th>
 	</tr>
 	<tr>
-		<td rowspan="16">接口</td>
+		<td rowspan="28">接口</td>
 		<td>缓存操作</td>
 		<td>通过消息ID获取消息</td>
 		<td>GetMessage(Async)</td>
@@ -88,6 +88,55 @@
 		<td>账号管理</td>
 		<td>删除好友</td>
 		<td>DeleteFriend(Async)</td>
+	</tr>
+	<tr>
+		<td rowspan="12">群管理</td>
+		<td>禁言群成员</td>
+		<td>Mute(Async)</td>
+	</tr>
+	<tr>
+		<td>解除群成员禁言</td>
+		<td>Unmute(Async)</td>
+	</tr>
+	<tr>
+		<td>移除群成员</td>
+		<td>Kick(Async)</td>
+	</tr>
+	<tr>
+		<td>退出群聊</td>
+		<td>Quit(Async)</td>
+	</tr>
+	<tr>
+		<td>全体禁言</td>
+		<td>MuteAll(Async)</td>
+	</tr>
+	<tr>
+		<td>解除全体禁言</td>
+		<td>UnmuteAll(Async)</td>
+	</tr>
+	<tr>
+		<td>设置群精华消息</td>
+		<td>SetEssence(Async)</td>
+	</tr>
+	<tr>
+		<td>获取群设置</td>
+		<td>GetGroupConfig(Async)</td>
+	</tr>
+	<tr>
+		<td>修改群设置</td>
+		<td>SetGroupConfig(Async)</td>
+	</tr>
+	<tr>
+		<td>获取群员设置</td>
+		<td>GetMemberInfo(Async)</td>
+	</tr>
+	<tr>
+		<td>修改群员设置</td>
+		<td>SetMemberInfo(Async)</td>
+	</tr>
+	<tr>
+		<td>修改群员管理员</td>
+		<td>SetMemberAdmin(Async)</td>
 	</tr>
 	<tr>
 		<td rowspan="1">多媒体内容上传</td>
