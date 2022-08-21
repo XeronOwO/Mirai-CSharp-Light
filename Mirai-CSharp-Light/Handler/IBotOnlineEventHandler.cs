@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 namespace Mirai.CSharp.Light.Handler
 {
 	/// <summary>
-	/// 群消息处理接口
+	/// Bot登录成功处理接口
 	/// </summary>
-	public interface IGroupMessageHandler
+	public interface IBotOnlineEventHandler
 	{
 		/// <summary>
-		/// 处理群消息
+		/// 处理Bot登录成功
 		/// </summary>
 		/// <param name="session">Mirai会话</param>
-		/// <param name="e">群消息事件信息</param>
+		/// <param name="e">Bot登录成功事件信息</param>
 		/// <returns>返回true中断后续的消息处理</returns>
-		public bool HandleGroupMessage(IMiraiSession session, IGroupMessageData e);
+		public bool HandleBotOnlineEvent(IMiraiSession session, IBotEventData e);
 	}
 }

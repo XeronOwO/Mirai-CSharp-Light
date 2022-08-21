@@ -17,7 +17,7 @@ namespace Mirai.CSharp.Light.Handler
 		/// 处理好友消息
 		/// </summary>
 		/// <param name="session">Mirai会话</param>
-		/// <param name="e">群消息事件参数</param>
+		/// <param name="e">群消息事件信息</param>
 		/// <returns>返回true中断后续的消息处理</returns>
 		public bool HandleFriendMessage(IMiraiSession session, IFriendMessageData e);
 	}

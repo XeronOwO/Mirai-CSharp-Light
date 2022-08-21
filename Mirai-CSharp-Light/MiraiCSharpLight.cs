@@ -214,7 +214,7 @@ namespace Mirai.CSharp.Light
 				case "GroupMessage":
 					{
 						var e = GroupMessageData.Parse(message);
-						logger.Info($"[Group:{e.Sender.Group.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						logger.Info($"[GroupMessage:{e.Sender.Group.Id}] => MessageChain={e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IGroupMessageHandler)
@@ -234,7 +234,7 @@ namespace Mirai.CSharp.Light
 				case "FriendMessage":
 					{
 						var e = FriendMessageData.Parse(message);
-						logger.Info($"[Friend:{e.Sender.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						logger.Info($"[FriendMessage:{e.Sender.Id}] => MessageChain={e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IFriendMessageHandler)
@@ -253,7 +253,7 @@ namespace Mirai.CSharp.Light
 				case "TempMessage":
 					{
 						var e = TempMessageData.Parse(message);
-						logger.Info($"[Temp:{e.Sender.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						logger.Info($"[TempMessage:{e.Sender.Id}] => MessageChain={e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is ITempMessageHandler)
@@ -272,7 +272,7 @@ namespace Mirai.CSharp.Light
 				case "StrangerMessage":
 					{
 						var e = StrangerMessageData.Parse(message);
-						logger.Info($"[Stranger:{e.Sender.Id}] => MessageChain:{e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						logger.Info($"[StrangerMessage:{e.Sender.Id}] => MessageChain={e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IStrangerMessageHandler)
@@ -288,7 +288,86 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
-					// 同步修改CommonMessageData
+				case "BotOnlineEvent":
+					{
+						var e = BotEventData.Parse(message);
+						logger.Info($"[BotOnlineEvent] => QQ={e.QQ}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotOnlineEventHandler)
+							{
+								if (((IBotOnlineEventHandler)handler).HandleBotOnlineEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotOfflineEventActive":
+					{
+						var e = BotEventData.Parse(message);
+						logger.Info($"[BotOfflineEventActive] => QQ={e.QQ}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotOfflineEventActiveHandler)
+							{
+								if (((IBotOfflineEventActiveHandler)handler).HandleBotOfflineEventActive(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotOfflineEventForce":
+					{
+						var e = BotEventData.Parse(message);
+						logger.Info($"[BotOfflineEventForce] => QQ={e.QQ}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotOfflineEventForceHandler)
+							{
+								if (((IBotOfflineEventForceHandler)handler).HandleBotOfflineEventForce(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotOfflineEventDropped":
+					{
+						var e = BotEventData.Parse(message);
+						logger.Info($"[BotOfflineEventDropped] => QQ={e.QQ}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotOfflineEventDroppedHandler)
+							{
+								if (((IBotOfflineEventDroppedHandler)handler).HandleBotOfflineEventDropped(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotReloginEvent":
+					{
+						var e = BotEventData.Parse(message);
+						logger.Info($"[BotReloginEvent] => QQ={e.QQ}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotReloginEventHandler)
+							{
+								if (((IBotReloginEventHandler)handler).HandleBotReloginEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
 				default:
 					logger.Warning($"[Unsupported] => {message.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 					break;

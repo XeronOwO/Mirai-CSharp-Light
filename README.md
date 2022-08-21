@@ -144,7 +144,8 @@
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
-		<td colspan="2" rowspan="4">事件</td>
+		<td rowspan="9">事件</td>
+		<td rowspan="4">消息事件</td>
 		<td>好友消息事件</td>
 		<td>IFriendMessageHandler</td>
 	</tr>
@@ -159,5 +160,26 @@
 	<tr>
 		<td>陌生人消息事件</td>
 		<td>IStrangerMessageHandler</td>
+	</tr>
+	<tr>
+		<td rowspan="5">Bot自身事件</td>
+		<td>Bot登录成功</td>
+		<td>IBotOnlineEventHandler</td>
+	</tr>
+	<tr>
+		<td>Bot主动离线</td>
+		<td>IBotOfflineEventActiveHandler</td>
+	</tr>
+	<tr>
+		<td>Bot被挤下线</td>
+		<td>IBotOfflineEventForceHandler</td>
+	</tr>
+	<tr>
+		<td>Bot被服务器断开或因网络问题而掉线</td>
+		<td>IBotOfflineEventDroppedHandler</td>
+	</tr>
+	<tr>
+		<td>Bot主动重新登录</td>
+		<td>IBotReloginEventHandler</td>
 	</tr>
 </table>

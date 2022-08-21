@@ -17,7 +17,7 @@ namespace Mirai.CSharp.Light.Handler
 		/// 处理临时消息
 		/// </summary>
 		/// <param name="session">Mirai会话</param>
-		/// <param name="e">临时消息事件参数</param>
+		/// <param name="e">临时消息事件信息</param>
 		/// <returns>返回true中断后续的消息处理</returns>
 		public bool HandleTempMessage(IMiraiSession session, ITempMessageData e);
 	}
