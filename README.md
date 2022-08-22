@@ -144,7 +144,7 @@
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="9">事件</td>
+		<td rowspan="11">事件</td>
 		<td rowspan="4">消息事件</td>
 		<td>好友消息事件</td>
 		<td>IFriendMessageHandler</td>
@@ -181,5 +181,14 @@
 	<tr>
 		<td>Bot主动重新登录</td>
 		<td>IBotReloginEventHandler</td>
+	</tr>
+	<tr>
+		<td rowspan="2">好友事件</td>
+		<td>好友输入状态改变</td>
+		<td>IFriendInputStatusChangedEventHandler</td>
+	</tr>
+	<tr>
+		<td>好友昵称改变</td>
+		<td>IFriendNickChangedEventHandler</td>
 	</tr>
 </table>

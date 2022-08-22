@@ -14,17 +14,17 @@ namespace Mirai.CSharp.Light.Models.Data
         private long id;
 
         [JsonIgnore]
-        public long Id { get => id; set => id = value; }
+        public long Id => id;
 
         private string nickname = "";
 
 		[JsonIgnore]
-		public string Nickname { get => nickname; set => nickname = value; }
+		public string Nickname => nickname;
 
 		private string remark = "";
 
 		[JsonIgnore]
-		public string Remark { get => remark; set => remark = value; }
+		public string Remark => remark;
 
 		public static UserData Parse(JObject json) => JsonConvert.DeserializeObject<UserData>(json.ToString(Formatting.None));
 	}

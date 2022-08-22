@@ -51,19 +51,13 @@ namespace Mirai.CSharp.Light.Models.Data
 		/// </summary>
 		/// <param name="json">JObject内容</param>
 		/// <returns>解析的GroupConfigData</returns>
-		public static GroupConfigData Parse(JObject json)
-		{
-			return JsonConvert.DeserializeObject<GroupConfigData>(json.ToString());
-		}
+		public static GroupConfigData Parse(JObject json) => JsonConvert.DeserializeObject<GroupConfigData>(json.ToString());
 
 		/// <summary>
 		/// 将群设置转换成JObject
 		/// </summary>
 		/// <returns>转换成的JObject</returns>
-		public JObject ToJObject()
-		{
-			return JObject.Parse(JsonConvert.SerializeObject(this, Formatting.None));
-		}
+		public JObject ToJObject() => JObject.Parse(JsonConvert.SerializeObject(this, Formatting.None));
 	}
 }
 #pragma warning restore CS8603 // 可能返回 null 引用。

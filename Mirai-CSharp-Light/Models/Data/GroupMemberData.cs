@@ -15,48 +15,45 @@ namespace Mirai.CSharp.Light.Models.Data
 		public string memberName = "";
 
 		[JsonIgnore]
-		public string MemberName { get => memberName; set => memberName = value; }
+		public string MemberName => memberName;
 
 		public string specialTitle = "";
 
 		[JsonIgnore]
-		public string SpecialTitle { get => specialTitle; set => specialTitle = value; }
+		public string SpecialTitle => specialTitle;
 
 		public string permission = "";
 
 		[JsonIgnore]
-		public GroupPermission Permission { get => permission.ToGroupPermission(); set => permission = value.GetString(); }
+		public GroupPermission Permission { get => permission.ToGroupPermission(); }
 
 		public long joinTimestamp;
 
 		[JsonIgnore]
-		public long JoinTimestamp { get => joinTimestamp; set => joinTimestamp = value; }
+		public long JoinTimestamp => joinTimestamp;
 
 		[JsonIgnore]
-		public DateTime JoinDateTime { get => joinTimestamp.ToDateTime(); set => joinTimestamp = value.ToTimestamp(); }
+		public DateTime JoinDateTime { get => joinTimestamp.ToDateTime(); }
 
 		public long lastSpeakTimestamp;
 
 		[JsonIgnore]
-		public long LastSpeakTimestamp { get => lastSpeakTimestamp; set => lastSpeakTimestamp = value; }
+		public long LastSpeakTimestamp { get => lastSpeakTimestamp; }
 
 		[JsonIgnore]
-		public DateTime LastSpeakDateTime { get => lastSpeakTimestamp.ToDateTime(); set => lastSpeakTimestamp = value.ToTimestamp(); }
+		public DateTime LastSpeakDateTime { get => lastSpeakTimestamp.ToDateTime(); }
 
 		public int muteTimeRemaining;
 
 		[JsonIgnore]
-		public int MuteTimeRemaining { get => muteTimeRemaining; set => muteTimeRemaining = value; }
+		public int MuteTimeRemaining => muteTimeRemaining;
 
 		public GroupData group = new();
 
 		[JsonIgnore]
 		public IGroupData Group => group;
 
-		public static GroupMemberData Parse(JObject json)
-		{
-			return JsonConvert.DeserializeObject<GroupMemberData>(json.ToString(Formatting.None));
-		}
+		public static GroupMemberData Parse(JObject json) => JsonConvert.DeserializeObject<GroupMemberData>(json.ToString(Formatting.None));
 	}
 }
 #pragma warning restore CS8603 // 可能返回 null 引用。

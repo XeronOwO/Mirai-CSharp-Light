@@ -15,17 +15,17 @@ namespace Mirai.CSharp.Light.Models.Data
 		public long id;
 
         [JsonIgnore]
-        public long Id { get => id; set => id = value; }
+		public long Id => id;
 
 		public string name = "";
 
 		[JsonIgnore]
-		public string Name { get => name; set => name = value; }
+		public string Name => name;
 
 		public string permission = "";
 
 		[JsonIgnore]
-		public GroupPermission Permission { get => permission.ToGroupPermission(); set => permission = value.GetString(); }
+		public GroupPermission Permission { get => permission.ToGroupPermission(); }
 
         public static GroupData Parse(JObject json) => JsonConvert.DeserializeObject<GroupData>(json.ToString(Formatting.None));
     }

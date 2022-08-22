@@ -19,7 +19,7 @@ namespace Mirai.CSharp.Light.Models.Data
 		public string type = "";
 
 		[JsonIgnore]
-		public string Type { get => type; set => type = value; }
+		public string Type => type;
 
 		public TempSenderData sender = new();
 

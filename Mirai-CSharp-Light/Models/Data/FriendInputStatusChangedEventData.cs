@@ -9,19 +9,24 @@ using System.Threading.Tasks;
 #pragma warning disable CS8603 // 可能返回 null 引用。
 namespace Mirai.CSharp.Light.Models.Data
 {
-	internal class BotEventData : IBotEventData
+	internal class FriendInputStatusChangedEventData : IFriendInputStatusChangedEventData
 	{
 		public string type = "";
 
 		[JsonIgnore]
 		public string Type => type;
 
-		public long qq;
+		public UserData friend = new();
 
 		[JsonIgnore]
-		public long QQ => qq;
+		public IUserData Friend => friend;
 
-		public static BotEventData Parse(JObject json) => JsonConvert.DeserializeObject<BotEventData>(json.ToString(Formatting.None));
+		public bool inputting;
+
+		[JsonIgnore]
+		public bool Inputting => inputting;
+
+		public static FriendInputStatusChangedEventData Parse(JObject json) => JsonConvert.DeserializeObject<FriendInputStatusChangedEventData>(json.ToString(Formatting.None));
 	}
 }
 #pragma warning restore CS8603 // 可能返回 null 引用。

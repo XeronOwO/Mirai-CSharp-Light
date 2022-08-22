@@ -12,6 +12,6 @@ namespace Mirai.CSharp.Light.Models.Data
         public long id;
 
         [JsonIgnore]
-        public long Id { get => id; set => id = value; }
+        public long Id => id;
     }
 }

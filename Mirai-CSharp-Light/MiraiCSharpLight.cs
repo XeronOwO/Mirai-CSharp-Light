@@ -368,6 +368,38 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
+				case "FriendInputStatusChangedEvent":
+					{
+						var e = FriendInputStatusChangedEventData.Parse(message);
+						logger.Info($"[FriendInputStatusChangedEvent] => Friend.Id={e.Friend.Id}, Friend.Nickname={e.Friend.Nickname}, Friend.Remark={e.Friend.Remark}, Inputting={e.Inputting}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IFriendInputStatusChangedEventHandler)
+							{
+								if (((IFriendInputStatusChangedEventHandler)handler).HandleFriendInputStatusChangedEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "FriendNickChangedEvent":
+					{
+						var e = FriendNickChangedEventData.Parse(message);
+						logger.Info($"[FriendNickChangedEvent] => Friend.Id={e.Friend.Id}, Friend.Nickname={e.Friend.Nickname}, Friend.Remark={e.Friend.Remark}, From={e.From}, To={e.To}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IFriendNickChangedEventHandler)
+							{
+								if (((IFriendNickChangedEventHandler)handler).HandleFriendNickChangedEventActive(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
 				default:
 					logger.Warning($"[Unsupported] => {message.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
 					break;
