@@ -6,6 +6,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>$(AssemblyName)</Title>
+    <Authors>Xeron</Authors>
+    <Description>轻量化、更易使用的为帮助C#开发者与 Mirai 交互的轻量化项目</Description>
+    <Copyright>The GNU General Public License v3.0</Copyright>
+    <PackageProjectUrl>https://github.com/q2398003522/Mirai-CSharp-Light/tree/master</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/q2398003522/Mirai-CSharp-Light/tree/master</RepositoryUrl>
+    <PackageTags>Mirai;CSharp;Mirai CSharp;Mirai-CSharp;Mirai CSharp Light;Mirai-CSharp-Light</PackageTags>
+    <PackAsTool>True</PackAsTool>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -17,8 +29,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="System.CodeDom" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
