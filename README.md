@@ -10,8 +10,9 @@
 [Newtownsoft.Json](https://www.newtonsoft.com/json)
 # 开始使用
 ## 安装
-推荐使用 Visual Studio 的 Nuget包管理器 安装Mirai-CSharp-Light  
+推荐使用 Visual Studio 的 Nuget包管理器 安装 Mirai-CSharp-Light  
 或者使用 dotnet tool install Mirai-CSharp-Light  
+NuGet链接：https://www.nuget.org/packages/Mirai-CSharp-Light/  
 当然可以用自己的 Visual Studio 编译本项目  
 Visual Studio 版本：2022  
 编写时目标框架（可根据情况修改）：.NET 6.0

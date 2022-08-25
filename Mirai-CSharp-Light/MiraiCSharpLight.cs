@@ -4,6 +4,7 @@ using Mirai.CSharp.Light.Handler;
 using Mirai.CSharp.Light.Logger;
 using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Session;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
@@ -211,10 +212,12 @@ namespace Mirai.CSharp.Light
 		{
 			switch ((string)message["type"])
 			{
+				#region 消息
+
 				case "GroupMessage":
 					{
 						var e = GroupMessageData.Parse(message);
-						logger.Info($"[GroupMessage:{e.Sender.Group.Id}] => MessageChain={e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						logger.Info($"[GroupMessage:{e.Sender.Group.Id}] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IGroupMessageHandler)
@@ -234,7 +237,7 @@ namespace Mirai.CSharp.Light
 				case "FriendMessage":
 					{
 						var e = FriendMessageData.Parse(message);
-						logger.Info($"[FriendMessage:{e.Sender.Id}] => MessageChain={e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						logger.Info($"[FriendMessage:{e.Sender.Id}] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IFriendMessageHandler)
@@ -253,7 +256,7 @@ namespace Mirai.CSharp.Light
 				case "TempMessage":
 					{
 						var e = TempMessageData.Parse(message);
-						logger.Info($"[TempMessage:{e.Sender.Id}] => MessageChain={e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						logger.Info($"[TempMessage:{e.Sender.Id}] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is ITempMessageHandler)
@@ -272,7 +275,7 @@ namespace Mirai.CSharp.Light
 				case "StrangerMessage":
 					{
 						var e = StrangerMessageData.Parse(message);
-						logger.Info($"[StrangerMessage:{e.Sender.Id}] => MessageChain={e.MessageChain.ToJArray().ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+						logger.Info($"[StrangerMessage:{e.Sender.Id}] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IStrangerMessageHandler)
@@ -288,10 +291,17 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
+
+				#endregion
+
+				#region 事件
+
+				#region Bot自身事件
+
 				case "BotOnlineEvent":
 					{
 						var e = BotEventData.Parse(message);
-						logger.Info($"[BotOnlineEvent] => QQ={e.QQ}");
+						logger.Info($"[BotOnlineEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IBotOnlineEventHandler)
@@ -307,7 +317,7 @@ namespace Mirai.CSharp.Light
 				case "BotOfflineEventActive":
 					{
 						var e = BotEventData.Parse(message);
-						logger.Info($"[BotOfflineEventActive] => QQ={e.QQ}");
+						logger.Info($"[BotOfflineEventActive] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IBotOfflineEventActiveHandler)
@@ -323,7 +333,7 @@ namespace Mirai.CSharp.Light
 				case "BotOfflineEventForce":
 					{
 						var e = BotEventData.Parse(message);
-						logger.Info($"[BotOfflineEventForce] => QQ={e.QQ}");
+						logger.Info($"[BotOfflineEventForce] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IBotOfflineEventForceHandler)
@@ -339,7 +349,7 @@ namespace Mirai.CSharp.Light
 				case "BotOfflineEventDropped":
 					{
 						var e = BotEventData.Parse(message);
-						logger.Info($"[BotOfflineEventDropped] => QQ={e.QQ}");
+						logger.Info($"[BotOfflineEventDropped] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IBotOfflineEventDroppedHandler)
@@ -355,7 +365,7 @@ namespace Mirai.CSharp.Light
 				case "BotReloginEvent":
 					{
 						var e = BotEventData.Parse(message);
-						logger.Info($"[BotReloginEvent] => QQ={e.QQ}");
+						logger.Info($"[BotReloginEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IBotReloginEventHandler)
@@ -368,10 +378,15 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
+
+				#endregion
+
+				#region 好友事件
+
 				case "FriendInputStatusChangedEvent":
 					{
 						var e = FriendInputStatusChangedEventData.Parse(message);
-						logger.Info($"[FriendInputStatusChangedEvent] => Friend.Id={e.Friend.Id}, Friend.Nickname={e.Friend.Nickname}, Friend.Remark={e.Friend.Remark}, Inputting={e.Inputting}");
+						logger.Info($"[FriendInputStatusChangedEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IFriendInputStatusChangedEventHandler)
@@ -387,7 +402,7 @@ namespace Mirai.CSharp.Light
 				case "FriendNickChangedEvent":
 					{
 						var e = FriendNickChangedEventData.Parse(message);
-						logger.Info($"[FriendNickChangedEvent] => Friend.Id={e.Friend.Id}, Friend.Nickname={e.Friend.Nickname}, Friend.Remark={e.Friend.Remark}, From={e.From}, To={e.To}");
+						logger.Info($"[FriendNickChangedEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
 						foreach (var handler in handlers)
 						{
 							if (handler is IFriendNickChangedEventHandler)
@@ -400,8 +415,161 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
+
+				#endregion
+
+				#region 群事件
+
+				case "BotGroupPermissionChangeEvent":
+					{
+						var e = BotGroupPermissionChangeEventData.Parse(message);
+						logger.Info($"[BotGroupPermissionChangeEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotGroupPermissionChangeEventHandler)
+							{
+								if (((IBotGroupPermissionChangeEventHandler)handler).HandleBotGroupPermissionChangeEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotMuteEvent":
+					{
+						var e = BotMuteEventData.Parse(message);
+						logger.Info($"[BotMuteEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotMuteEventHandler)
+							{
+								if (((IBotMuteEventHandler)handler).HandleBotMuteEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotUnmuteEvent":
+					{
+						var e = BotUnmuteEventData.Parse(message);
+						logger.Info($"[BotUnmuteEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotUnmuteEventHandler)
+							{
+								if (((IBotUnmuteEventHandler)handler).HandleBotUnmuteEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotJoinGroupEvent":
+					{
+						var e = BotJoinGroupEventData.Parse(message);
+						logger.Info($"[BotJoinGroupEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotJoinGroupEventHandler)
+							{
+								if (((IBotJoinGroupEventHandler)handler).HandleBotJoinGroupEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotLeaveEventActive":
+					{
+						var e = BotLeaveEventActiveData.Parse(message);
+						logger.Info($"[BotLeaveEventActive] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotLeaveEventActiveHandler)
+							{
+								if (((IBotLeaveEventActiveHandler)handler).HandleBotLeaveEventActive(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotLeaveEventKick":
+					{
+						var e = BotLeaveEventKickData.Parse(message);
+						logger.Info($"[BotLeaveEventKick] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotLeaveEventKickHandler)
+							{
+								if (((IBotLeaveEventKickHandler)handler).HandleBotLeaveEventKick(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotLeaveEventDisband":
+					{
+						var e = BotLeaveEventDisbandData.Parse(message);
+						logger.Info($"[BotLeaveEventDisband] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotLeaveEventDisbandHandler)
+							{
+								if (((IBotLeaveEventDisbandHandler)handler).HandleBotLeaveEventDisband(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "GroupRecallEvent":
+					{
+						var e = GroupRecallEventData.Parse(message);
+						logger.Info($"[GroupRecallEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IGroupRecallEventHandler)
+							{
+								if (((IGroupRecallEventHandler)handler).HandleGroupRecallEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "FriendRecallEvent":
+					{
+						var e = FriendRecallEventData.Parse(message);
+						logger.Info($"[FriendRecallEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IFriendRecallEventHandler)
+							{
+								if (((IFriendRecallEventHandler)handler).HandleFriendRecallEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+
+				#endregion
+
+				#endregion
 				default:
-					logger.Warning($"[Unsupported] => {message.ToString(Newtonsoft.Json.Formatting.None).ReplaceReturn()}");
+					logger.Warning($"[Unsupported] => {message.ToString(Formatting.None).ReplaceReturn()}");
 					break;
 			}
 		}

@@ -24,6 +24,7 @@ namespace Mirai.CSharp.Light.Extensions
 		/// <summary>
 		/// 消息类型
 		/// </summary>
+		[JsonIgnore]
 		public string Type => type;
 
 		private ISenderData sender = new SenderData();
@@ -31,13 +32,16 @@ namespace Mirai.CSharp.Light.Extensions
 		/// <summary>
 		/// 发送者信息
 		/// </summary>
+		[JsonIgnore]
 		public ISenderData Sender => sender;
 
+		[JsonIgnore]
 		private IChatMessage[] messageChain = Array.Empty<IChatMessage>();
 
 		/// <summary>
 		/// 消息链
 		/// </summary>
+		[JsonIgnore]
 		public IChatMessage[] MessageChain => messageChain;
 
 		/// <summary>

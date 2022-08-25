@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0649: 从未对字段“TempSenderData.joinTimestamp”赋值，字段将一直保持其默认值 0
+dotnet_diagnostic.CS0649.severity = none
