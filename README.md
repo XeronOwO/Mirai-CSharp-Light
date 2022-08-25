@@ -149,7 +149,7 @@ Visual Studio 版本：2022
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="11">事件</td>
+		<td rowspan="20">事件</td>
 		<td rowspan="4">消息事件</td>
 		<td>好友消息事件</td>
 		<td>IFriendMessageHandler</td>
@@ -195,5 +195,42 @@ Visual Studio 版本：2022
 	<tr>
 		<td>好友昵称改变</td>
 		<td>IFriendNickChangedEventHandler</td>
+	</tr>
+	<tr>
+		<td rowspan="9">群事件</td>
+		<td>Bot在群里的权限被改变. 操作人一定是群主</td>
+		<td>IBotGroupPermissionChangeEventHandler</td>
+	</tr>
+	<tr>
+		<td>Bot被禁言</td>
+		<td>IBotMuteEventHandler</td>
+	</tr>
+	<tr>
+		<td>Bot被取消禁言</td>
+		<td>IBotUnmuteEventHandler</td>
+	</tr>
+	<tr>
+		<td>Bot加入了一个新群</td>
+		<td>IBotJoinGroupEventHandler</td>
+	</tr>
+	<tr>
+		<td>Bot主动退出一个群</td>
+		<td>IBotLeaveEventActiveHandler</td>
+	</tr>
+	<tr>
+		<td>Bot被踢出一个群</td>
+		<td>IBotLeaveEventKickHandler</td>
+	</tr>
+	<tr>
+		<td>Bot因群主解散群而退出群, 操作人一定是群主</td>
+		<td>IBotLeaveEventDisbandHandler</td>
+	</tr>
+	<tr>
+		<td>群消息撤回</td>
+		<td>IGroupRecallEventHandler</td>
+	</tr>
+	<tr>
+		<td>好友消息撤回</td>
+		<td>IFriendRecallEventHandler</td>
 	</tr>
 </table>
