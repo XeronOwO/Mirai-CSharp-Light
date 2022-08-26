@@ -15,10 +15,15 @@
     <RepositoryUrl>https://github.com/q2398003522/Mirai-CSharp-Light/tree/master</RepositoryUrl>
     <PackageTags>Mirai;CSharp;Mirai CSharp;Mirai-CSharp;Mirai CSharp Light;Mirai-CSharp-Light</PackageTags>
     <PackAsTool>True</PackAsTool>
+    <ToolCommandName>MiraiCSharpLight</ToolCommandName>
     <NeutralLanguage>zh-CN</NeutralLanguage>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.3</Version>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

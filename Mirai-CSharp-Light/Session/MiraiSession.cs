@@ -831,11 +831,12 @@ namespace Mirai.CSharp.Light.Session
 
 		public ImageMessage UploadImage(ContextType type, string path)
 		{
+			var file = new FileInfo(path);
 			var result = Post("uploadImage", new MultipartFormDataContent
 			{
 				{ new StringContent(SessionKey), "sessionKey" },
-				{ new StringContent(type.GetString()), "type" },
-				{ new StreamContent(new FileStream(path, FileMode.Open, FileAccess.Read)), "img" }
+				{ new StringContent(type.GetString().ToLower()), "type" },
+				{ new StreamContent(new FileStream(path, FileMode.Open, FileAccess.Read)), "img", file.Name }
 			});
 			logger.Info($"[UploadImage] <= ImageId:{(string)result["imageId"]}");
 			return new ImageMessage((string)result["imageId"], (string)result["url"], null, null);

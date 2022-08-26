@@ -30,6 +30,9 @@ namespace Mirai.CSharp.Light.Extensions
 					case "Plain":
 						chain[i] = new PlainMessage((string)data["text"]);
 						break;
+					case "Quote":
+						chain[i] = new QuoteMessage((int)data["id"], (long)data["groupId"], (long)data["senderId"], (long)data["targetId"], ((JArray)data["origin"]).ToIChatMessageArray());
+						break;
 					case "At":
 						chain[i] = new AtMessage((long)data["target"]);
 						break;

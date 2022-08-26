@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Mirai-CSharp-Light</id>
+    <version>1.0.3</version>
+    <title>Mirai-CSharp-Light</title>
+    <authors>Xeron</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">LGPL-3.0-or-later</license>
+    <licenseUrl>https://licenses.nuget.org/LGPL-3.0-or-later</licenseUrl>
+    <projectUrl>https://github.com/q2398003522/Mirai-CSharp-Light/tree/master</projectUrl>
+    <description>轻量化、更易使用的为帮助C#开发者与 Mirai 交互的轻量化项目</description>
+    <copyright>The GNU General Public License v3.0</copyright>
+    <tags>Mirai CSharp Mirai CSharp Mirai-CSharp Mirai CSharp Light Mirai-CSharp-Light</tags>
+    <repository url="https://github.com/q2398003522/Mirai-CSharp-Light/tree/master" />
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="13.0.1" />
+    </dependencies>
+  </metadata>
+</package>

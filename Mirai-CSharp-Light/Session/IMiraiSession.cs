@@ -1,5 +1,4 @@
 ﻿using Mirai.CSharp.Light.Exception;
-using Mirai.CSharp.Light.Extensions;
 using Mirai.CSharp.Light.Models;
 using Mirai.CSharp.Light.Models.Data;
 using Mirai.CSharp.Light.Models.Message;

@@ -7,7 +7,7 @@
 相比于 [Mirai-CSharp](https://github.com/Executor-Cheng/Mirai-CSharp) ，Mirai-CSharp-Light更加轻量化、简洁、易于使用，而且几乎所有功能都同时支持同步与异步  
 它通过调用 [Mirai-Api-Http](https://github.com/project-mirai/mirai-api-http) 提供的 Http-Api 与其交互
 ## 第三方库
-[Newtownsoft.Json](https://www.newtonsoft.com/json)
+[Newtonsoft.Json](https://www.newtonsoft.com/json)
 # 开始使用
 ## 安装
 推荐使用 Visual Studio 的 Nuget包管理器 安装 Mirai-CSharp-Light  

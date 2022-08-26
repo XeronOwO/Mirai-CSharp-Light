@@ -1,4 +1,4 @@
-﻿using Mirai.CSharp.Light.Models.Data;
+﻿using Mirai.CSharp.Light.Extensions;
 using Mirai.CSharp.Light.Models.Message;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 #pragma warning disable CS8601 // 引用类型赋值可能为 null。
 #pragma warning disable CS8602 // 解引用可能出现空引用。
 #pragma warning disable CS8604 // 引用类型参数可能为 null。
-namespace Mirai.CSharp.Light.Extensions
+namespace Mirai.CSharp.Light.Models.Data
 {
 	/// <summary>
 	/// 通用消息信息
