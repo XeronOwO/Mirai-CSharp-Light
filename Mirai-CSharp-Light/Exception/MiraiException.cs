@@ -45,7 +45,7 @@ namespace Mirai.CSharp.Light.Exception
 		/// <param name="name">Logger名称</param>
 		/// <param name="message">异常信息</param>
 		/// <param name="id">错误id</param>
-		public MiraiException(string name, string message, int id) : base(message)
+		public MiraiException(string name, string message, int id) : base($"{message}：{GetErrorMessage(id)}")
 		{
 			MiraiCSharpLightLogger.GetLogger(name).Error($"{message}：{GetErrorMessage(id)}");
 			Console.ForegroundColor = ConsoleColor.Red;
@@ -58,7 +58,7 @@ namespace Mirai.CSharp.Light.Exception
 		/// <param name="message">异常信息</param>
 		/// <param name="id">错误id</param>
 		/// <param name="extraMessage">额外异常信息</param>
-		public MiraiException(string name, string message, int id, string extraMessage) : base(message)
+		public MiraiException(string name, string message, int id, string extraMessage) : base($"{message}：{GetErrorMessage(id)}（{extraMessage}）")
 		{
 			MiraiCSharpLightLogger.GetLogger(name).Error($"{message}：{GetErrorMessage(id)}（{extraMessage}）");
 			Console.ForegroundColor = ConsoleColor.Red;

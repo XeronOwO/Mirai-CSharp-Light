@@ -421,7 +421,7 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="memberId">指定群员QQ号</param>
 		/// <param name="time">禁言时长，单位为秒，最多30天，默认为0</param>
 		/// <exception cref="MiraiException"></exception>
-		public void Mute(long target, long memberId, DateTime time);
+		public void Mute(long target, long memberId, TimeSpan time);
 
 		/// <summary>
 		/// 异步禁言群成员
@@ -430,7 +430,7 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="memberId">指定群员QQ号</param>
 		/// <param name="time">禁言时长，单位为秒，最多30天，默认为0</param>
 		/// <returns>Task实例</returns>
-		public Task MuteAsync(long target, long memberId, DateTime time);
+		public Task MuteAsync(long target, long memberId, TimeSpan time);
 
 		#endregion
 

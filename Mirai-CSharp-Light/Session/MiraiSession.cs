@@ -586,9 +586,9 @@ namespace Mirai.CSharp.Light.Session
 
 		public Task MuteAsync(long target, long memberId, int time) => Task.Run(() => Mute(target, memberId, time));
 
-		public void Mute(long target, long memberId, DateTime time) => Mute(target, memberId, (int)new TimeSpan(time.Ticks).TotalSeconds);
+		public void Mute(long target, long memberId, TimeSpan time) => Mute(target, memberId, (int)time.TotalSeconds);
 
-		public Task MuteAsync(long target, long memberId, DateTime time) => Task.Run(() => Mute(target, memberId, time));
+		public Task MuteAsync(long target, long memberId, TimeSpan time) => Task.Run(() => Mute(target, memberId, time));
 
 		#endregion
 

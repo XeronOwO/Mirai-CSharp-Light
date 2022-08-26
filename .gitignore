@@ -364,3 +364,7 @@ FodyWeavers.xsd
 
 # Shell
 *.sh
+
+*.nuspec
+
+*.bat

@@ -46,10 +46,10 @@ namespace Mirai.CSharp.Light.Extensions
 						chain[i] = new FaceMessage((long?)data["faceId"], (string?)data["name"]);
 						break;
 					case "Image":
-						chain[i] = new ImageMessage((string?)data["ImageId"], (string?)data["url"], (string?)data["path"], (string?)data["base64"]);
+						chain[i] = new ImageMessage((string?)data["imageId"], (string?)data["url"], (string?)data["path"], (string?)data["base64"]);
 						break;
 					case "FlashImage":
-						chain[i] = new FlashImageMessage((string?)data["ImageId"], (string?)data["url"], (string?)data["path"], (string?)data["base64"]);
+						chain[i] = new FlashImageMessage((string?)data["imageId"], (string?)data["url"], (string?)data["path"], (string?)data["base64"]);
 						break;
 					case "Voice":
 						chain[i] = new VoiceMessage((string?)data["VoiceId"], (string?)data["url"], (string?)data["path"], (string?)data["base64"], (string?)data["length"]);
