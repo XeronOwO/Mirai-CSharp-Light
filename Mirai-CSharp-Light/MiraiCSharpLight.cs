@@ -883,6 +883,7 @@ namespace Mirai.CSharp.Light
 				#endregion
 
 				#endregion
+
 				default:
 					logger.Warning($"[Unsupported] => {message.ToString(Formatting.None).ReplaceReturn()}");
 					break;

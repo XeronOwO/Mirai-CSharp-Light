@@ -848,6 +848,70 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
+		#region 事件处理
+
+		#region 添加好友申请
+
+		public void HandleNewFriendRequest(INewFriendRequestEventData e, NewFriendOperateType operate, string message)
+		{
+			Post("resp/newFriendRequestEvent", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["eventId"] = e.EventId,
+				["fromId"] = e.FromId,
+				["groupId"] = e.GroupId,
+				["operate"] = (int)operate,
+				["message"] = message,
+			});
+			logger.Info($"[HandleNewFriendRequest] <= eventId={e.EventId}, fromId={e.FromId}, groupId={e.GroupId}, operate={(int)operate}, message={message}");
+		}
+
+		public Task HandleNewFriendRequestAsync(INewFriendRequestEventData e, NewFriendOperateType operate, string message) => Task.Run(() => HandleNewFriendRequest(e, operate, message));
+
+		#endregion
+
+		#region 用户入群申请
+
+		public void HandleMemberJoinRequest(IMemberJoinRequestEventData e, MemberJoinOperateType operate, string message)
+		{
+			Post("resp/memberJoinRequestEvent", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["eventId"] = e.EventId,
+				["fromId"] = e.FromId,
+				["groupId"] = e.GroupId,
+				["operate"] = (int)operate,
+				["message"] = message,
+			});
+			logger.Info($"[HandleMemberJoinRequest] <= eventId={e.EventId}, fromId={e.FromId}, groupId={e.GroupId}, operate={(int)operate}, message={message}");
+		}
+
+		public Task HandleMemberJoinRequestAsync(IMemberJoinRequestEventData e, MemberJoinOperateType operate, string message) => Task.Run(() => HandleMemberJoinRequest(e, operate, message));
+
+		#endregion
+
+		#region Bot被邀请入群申请
+
+		public void HandleBotInvitedJoinGroupRequest(IBotInvitedJoinGroupRequestEventData e, BotInvitedJoinGroupOperateType operate, string message)
+		{
+			Post("resp/botInvitedJoinGroupRequestEvent", new JObject()
+			{
+				["sessionKey"] = SessionKey,
+				["eventId"] = e.EventId,
+				["fromId"] = e.FromId,
+				["groupId"] = e.GroupId,
+				["operate"] = (int)operate,
+				["message"] = message,
+			});
+			logger.Info($"[HandleBotInvitedJoinGroupRequest] <= eventId={e.EventId}, fromId={e.FromId}, groupId={e.GroupId}, operate={(int)operate}, message={message}");
+		}
+
+		public Task HandleBotInvitedJoinGroupRequestAsync(IBotInvitedJoinGroupRequestEventData e, BotInvitedJoinGroupOperateType operate, string message) => Task.Run(() => HandleBotInvitedJoinGroupRequest(e, operate, message));
+
+		#endregion
+
+		#endregion
+
 		#endregion
 	}
 }

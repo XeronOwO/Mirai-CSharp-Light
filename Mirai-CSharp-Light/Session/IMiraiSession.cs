@@ -691,6 +691,73 @@ namespace Mirai.CSharp.Light.Session
 
 		#endregion
 
+		#region 事件处理
+
+		#region 添加好友申请
+
+		/// <summary>
+		/// 处理添加好友申请
+		/// </summary>
+		/// <param name="e">添加好友申请事件信息</param>
+		/// <param name="operate">添加好友申请处理方式</param>
+		/// <param name="message">回复的信息</param>
+		public void HandleNewFriendRequest(INewFriendRequestEventData e, NewFriendOperateType operate, string message);
+
+		/// <summary>
+		/// 异步处理添加好友申请
+		/// </summary>
+		/// <param name="e">添加好友申请事件信息</param>
+		/// <param name="operate">添加好友申请处理方式</param>
+		/// <param name="message">回复的信息</param>
+		/// <returns>Task实例</returns>
+		public Task HandleNewFriendRequestAsync(INewFriendRequestEventData e, NewFriendOperateType operate, string message);
+
+		#endregion
+
+		#region 用户入群申请
+
+		/// <summary>
+		/// 处理用户入群申请（Bot需要有管理员权限）
+		/// </summary>
+		/// <param name="e">用户入群申请事件信息</param>
+		/// <param name="operate">用户入群申请处理方式</param>
+		/// <param name="message">回复的信息</param>
+		public void HandleMemberJoinRequest(IMemberJoinRequestEventData e, MemberJoinOperateType operate, string message);
+
+		/// <summary>
+		/// 异步处理用户入群申请（Bot需要有管理员权限）
+		/// </summary>
+		/// <param name="e">用户入群申请事件信息</param>
+		/// <param name="operate">用户入群申请处理方式</param>
+		/// <param name="message">回复的信息</param>
+		/// <returns>Task实例</returns>
+		public Task HandleMemberJoinRequestAsync(IMemberJoinRequestEventData e, MemberJoinOperateType operate, string message);
+
+		#endregion
+
+		#region Bot被邀请入群申请
+
+		/// <summary>
+		/// 处理Bot被邀请入群申请
+		/// </summary>
+		/// <param name="e">Bot被邀请入群申请事件信息</param>
+		/// <param name="operate">Bot被邀请入群申请处理方式</param>
+		/// <param name="message">回复的信息</param>
+		public void HandleBotInvitedJoinGroupRequest(IBotInvitedJoinGroupRequestEventData e, BotInvitedJoinGroupOperateType operate, string message);
+
+		/// <summary>
+		/// 异步Bot被邀请入群申请
+		/// </summary>
+		/// <param name="e">Bot被邀请入群申请事件信息</param>
+		/// <param name="operate">Bot被邀请入群申请处理方式</param>
+		/// <param name="message">回复的信息</param>
+		/// <returns>Task实例</returns>
+		public Task HandleBotInvitedJoinGroupRequestAsync(IBotInvitedJoinGroupRequestEventData e, BotInvitedJoinGroupOperateType operate, string message);
+
+		#endregion
+
+		#endregion
+
 		#endregion
 	}
 }
