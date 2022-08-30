@@ -30,7 +30,7 @@ Visual Studio 版本：2022
 		<th>对应的函数或接口</th>
 	</tr>
 	<tr>
-		<td rowspan="28">接口</td>
+		<td rowspan="31">接口</td>
 		<td>缓存操作</td>
 		<td>通过消息ID获取消息</td>
 		<td>GetMessage(Async)</td>
@@ -147,6 +147,19 @@ Visual Studio 版本：2022
 		<td rowspan="1">多媒体内容上传</td>
 		<td>图片文件上传</td>
 		<td>UploadImage(Async)</td>
+	</tr>
+	<tr>
+		<td rowspan="3">事件处理</td>
+		<td>添加好友申请</td>
+		<td>HandleNewFriendRequest(Async)</td>
+	</tr>
+	<tr>
+		<td>用户入群申请</td>
+		<td>HandleMemberJoinRequest(Async)</td>
+	</tr>
+	<tr>
+		<td>Bot被邀请入群申请</td>
+		<td>HandleBotInvitedJoinGroupRequest(Async)</td>
 	</tr>
 	<tr>
 		<td rowspan="38">事件</td>
