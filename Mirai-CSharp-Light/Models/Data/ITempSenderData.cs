@@ -9,7 +9,7 @@ namespace Mirai.CSharp.Light.Models.Data
 	/// <summary>
 	/// 群消息发送者信息
 	/// </summary>
-	public interface ITempSenderData : ISenderData
+	public interface ITempSenderData : IIdData
 	{
 		/// <summary>
 		/// 群昵称

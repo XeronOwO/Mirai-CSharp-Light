@@ -50,5 +50,22 @@ namespace Mirai.CSharp.Light.Extensions
 					  .Replace("\n", @"\n")
 					  ;
 		}
+
+		public static ContextType ToContextType(this string s)
+		{
+			if (s.Equals("Friend", StringComparison.OrdinalIgnoreCase))
+			{
+				return ContextType.Friend;
+			}
+			if (s.Equals("Group", StringComparison.OrdinalIgnoreCase))
+			{
+				return ContextType.Group;
+			}
+			if (s.Equals("Temp", StringComparison.OrdinalIgnoreCase))
+			{
+				return ContextType.Temp;
+			}
+			throw new MiraiException("StringExtension", "字符串解析成ContextType失败");
+		}
 	}
 }

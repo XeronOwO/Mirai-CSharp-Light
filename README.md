@@ -149,7 +149,7 @@ Visual Studio 版本：2022
 		<td>UploadImage(Async)</td>
 	</tr>
 	<tr>
-		<td rowspan="20">事件</td>
+		<td rowspan="38">事件</td>
 		<td rowspan="4">消息事件</td>
 		<td>好友消息事件</td>
 		<td>IFriendMessageHandler</td>
@@ -197,7 +197,7 @@ Visual Studio 版本：2022
 		<td>IFriendNickChangedEventHandler</td>
 	</tr>
 	<tr>
-		<td rowspan="9">群事件</td>
+		<td rowspan="25">群事件</td>
 		<td>Bot在群里的权限被改变. 操作人一定是群主</td>
 		<td>IBotGroupPermissionChangeEventHandler</td>
 	</tr>
@@ -232,5 +232,78 @@ Visual Studio 版本：2022
 	<tr>
 		<td>好友消息撤回</td>
 		<td>IFriendRecallEventHandler</td>
+	</tr>
+	<tr>
+		<td>戳一戳事件</td>
+		<td>INudgeEventHandler</td>
+	</tr>
+	<tr>
+		<td>某个群名改变</td>
+		<td>IGroupNameChangeEventHandler</td>
+	</tr>
+	<tr>
+		<td>某群入群公告改变</td>
+		<td>IGroupEntranceAnnouncementChangeEventHandler</td>
+	</tr>
+	<tr>
+		<td>全员禁言</td>
+		<td>IGroupMuteAllEventHandler</td>
+	</tr>
+	<tr>
+		<td>匿名聊天</td>
+		<td>IGroupAllowAnonymousChatEventHandler</td>
+	</tr>
+	<tr>
+		<td>坦白说</td>
+		<td>IGroupAllowConfessTalkEventHandler</td>
+	</tr>
+	<tr>
+		<td>允许群员邀请好友加群</td>
+		<td>IGroupAllowMemberInviteEventHandler</td>
+	</tr>
+	<tr>
+		<td>新人入群的事件</td>
+		<td>IMemberJoinEventHandler</td>
+	</tr>
+	<tr>
+		<td>成员被踢出群（该成员不是Bot）</td>
+		<td>IMemberLeaveEventKickHandler</td>
+	</tr>
+	<tr>
+		<td>成员主动离群（该成员不是Bot）</td>
+		<td>IMemberLeaveEventQuitHandler</td>
+	</tr>
+	<tr>
+		<td>群名片改动</td>
+		<td>IMemberCardChangeEventHandler</td>
+	</tr>
+	<tr>
+		<td>群头衔改动（只有群主有操作限权）</td>
+		<td>IMemberSpecialTitleChangeEventHandler</td>
+	</tr>
+	<tr>
+		<td>成员权限改变的事件（该成员不是Bot）</td>
+		<td>IMemberPermissionChangeEventHandler</td>
+	</tr>
+	<tr>
+		<td>群成员被禁言事件（该成员不是Bot）</td>
+		<td>IMemberMuteEventHandler</td>
+	</tr>
+	<tr>
+		<td>群成员被取消禁言事件（该成员不是Bot）</td>
+		<td>IMemberUnmuteEventHandler</td>
+	</tr>
+	<tr>
+		<td>群员称号改变</td>
+		<td>IMemberHonorChangeEventHandler</td>
+	</tr>
+	<tr>
+		<td rowspan="2">其他客户端事件</td>
+		<td>其他客户端上线</td>
+		<td>IOtherClientOnlineEventHandler</td>
+	</tr>
+	<tr>
+		<td>其他客户端下线</td>
+		<td>IOtherClientOfflineEventHandler</td>
 	</tr>
 </table>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Models.Data
 {
-	internal class TempSenderData : SenderData, ITempSenderData
+	internal class TempSenderData : IdData, ITempSenderData
 	{
 		public string memberName = "";
 

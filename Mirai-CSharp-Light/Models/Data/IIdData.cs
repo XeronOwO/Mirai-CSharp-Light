@@ -9,7 +9,7 @@ namespace Mirai.CSharp.Light.Models.Data
     /// <summary>
     /// 消息发送者信息
     /// </summary>
-    public interface ISenderData
+    public interface IIdData
     {
         /// <summary>
         /// QQ号

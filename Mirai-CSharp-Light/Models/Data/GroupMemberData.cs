@@ -10,8 +10,13 @@ using System.Threading.Tasks;
 #pragma warning disable CS8603 // 可能返回 null 引用。
 namespace Mirai.CSharp.Light.Models.Data
 {
-	internal class GroupMemberData : SenderData, IGroupMemberData
+	internal class GroupMemberData : IGroupMemberData
 	{
+		public long id;
+
+		[JsonIgnore]
+		public long Id => id;
+
 		public string memberName = "";
 
 		[JsonIgnore]

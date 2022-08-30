@@ -27,13 +27,13 @@ namespace Mirai.CSharp.Light.Models.Data
 		[JsonIgnore]
 		public string Type => type;
 
-		private ISenderData sender = new SenderData();
+		private IIdData sender = new IdData();
 
 		/// <summary>
 		/// 发送者信息
 		/// </summary>
 		[JsonIgnore]
-		public ISenderData Sender => sender;
+		public IIdData Sender => sender;
 
 		[JsonIgnore]
 		private IChatMessage[] messageChain = Array.Empty<IChatMessage>();

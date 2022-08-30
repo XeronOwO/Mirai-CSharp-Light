@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Models.Data
 {
-    internal class SenderData : ISenderData
+    internal class IdData : IIdData
     {
         public long id;
 

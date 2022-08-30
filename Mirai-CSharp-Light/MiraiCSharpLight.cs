@@ -15,6 +15,7 @@ using System.Web;
 #pragma warning disable CS8601 // 引用类型赋值可能为 null。
 #pragma warning disable CS8602 // 解引用可能出现空引用。
 #pragma warning disable CS8604 // 引用类型参数可能为 null。
+#pragma warning disable IDE0038 // 使用模式匹配
 namespace Mirai.CSharp.Light
 {
 	/// <summary>
@@ -564,6 +565,320 @@ namespace Mirai.CSharp.Light
 						}
 					}
 					break;
+				case "NudgeEvent":
+					{
+						var e = NudgeEventData.Parse(message);
+						logger.Info($"[NudgeEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is INudgeEventHandler)
+							{
+								if (((INudgeEventHandler)handler).HandleNudgeEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "GroupNameChangeEvent":
+					{
+						var e = GroupNameChangeEventData.Parse(message);
+						logger.Info($"[GroupNameChangeEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IGroupNameChangeEventHandler)
+							{
+								if (((IGroupNameChangeEventHandler)handler).HandleGroupNameChangeEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "GroupEntranceAnnouncementChangeEvent":
+					{
+						var e = GroupEntranceAnnouncementChangeEventData.Parse(message);
+						logger.Info($"[GroupEntranceAnnouncementChangeEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IGroupEntranceAnnouncementChangeEventHandler)
+							{
+								if (((IGroupEntranceAnnouncementChangeEventHandler)handler).HandleGroupEntranceAnnouncementChangeEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "GroupMuteAllEvent":
+					{
+						var e = GroupMuteAllEventData.Parse(message);
+						logger.Info($"[GroupMuteAllEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IGroupMuteAllEventHandler)
+							{
+								if (((IGroupMuteAllEventHandler)handler).HandleGroupMuteAllEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "GroupAllowAnonymousChatEvent":
+					{
+						var e = GroupAllowAnonymousChatEventData.Parse(message);
+						logger.Info($"[GroupAllowAnonymousChatEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IGroupAllowAnonymousChatEventHandler)
+							{
+								if (((IGroupAllowAnonymousChatEventHandler)handler).HandleGroupAllowAnonymousChatEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "GroupAllowConfessTalkEvent":
+					{
+						var e = GroupAllowConfessTalkEventData.Parse(message);
+						logger.Info($"[GroupAllowConfessTalkEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IGroupAllowConfessTalkEventHandler)
+							{
+								if (((IGroupAllowConfessTalkEventHandler)handler).HandleGroupAllowConfessTalkEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "GroupAllowMemberInviteEvent":
+					{
+						var e = GroupAllowMemberInviteEventData.Parse(message);
+						logger.Info($"[GroupAllowMemberInviteEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IGroupAllowMemberInviteEventHandler)
+							{
+								if (((IGroupAllowMemberInviteEventHandler)handler).HandleGroupAllowMemberInviteEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "MemberJoinEvent":
+					{
+						var e = MemberJoinEventData.Parse(message);
+						logger.Info($"[MemberJoinEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IMemberJoinEventHandler)
+							{
+								if (((IMemberJoinEventHandler)handler).HandleMemberJoinEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "MemberLeaveEventKick":
+					{
+						var e = MemberLeaveEventKickData.Parse(message);
+						logger.Info($"[MemberLeaveEventKick] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IMemberLeaveEventKickHandler)
+							{
+								if (((IMemberLeaveEventKickHandler)handler).HandleMemberLeaveEventKick(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "MemberLeaveEventQuit":
+					{
+						var e = MemberLeaveEventQuitData.Parse(message);
+						logger.Info($"[MemberLeaveEventQuit] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IMemberLeaveEventQuitHandler)
+							{
+								if (((IMemberLeaveEventQuitHandler)handler).HandleMemberLeaveEventQuit(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "MemberCardChangeEvent":
+					{
+						var e = MemberCardChangeEventData.Parse(message);
+						logger.Info($"[MemberCardChangeEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IMemberCardChangeEventHandler)
+							{
+								if (((IMemberCardChangeEventHandler)handler).HandleMemberCardChangeEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "MemberPermissionChangeEvent":
+					{
+						var e = MemberPermissionChangeEventData.Parse(message);
+						logger.Info($"[MemberPermissionChangeEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IMemberPermissionChangeEventHandler)
+							{
+								if (((IMemberPermissionChangeEventHandler)handler).HandleMemberPermissionChangeEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "MemberMuteEvent":
+					{
+						var e = MemberMuteEventData.Parse(message);
+						logger.Info($"[MemberMuteEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IMemberMuteEventHandler)
+							{
+								if (((IMemberMuteEventHandler)handler).HandleMemberMuteEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "MemberUnmuteEvent":
+					{
+						var e = MemberUnmuteEventData.Parse(message);
+						logger.Info($"[MemberUnmuteEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IMemberUnmuteEventHandler)
+							{
+								if (((IMemberUnmuteEventHandler)handler).HandleMemberUnmuteEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+
+				#endregion
+
+				#region 申请事件
+
+				case "NewFriendRequestEvent":
+					{
+						var e = NewFriendRequestEventData.Parse(message);
+						logger.Info($"[NewFriendRequestEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is INewFriendRequestEventHandler)
+							{
+								if (((INewFriendRequestEventHandler)handler).HandleNewFriendRequestEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "MemberJoinRequestEvent":
+					{
+						var e = MemberJoinRequestEventData.Parse(message);
+						logger.Info($"[MemberJoinRequestEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IMemberJoinRequestEventHandler)
+							{
+								if (((IMemberJoinRequestEventHandler)handler).HandleMemberJoinRequestEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "BotInvitedJoinGroupRequestEvent":
+					{
+						var e = BotInvitedJoinGroupRequestEventData.Parse(message);
+						logger.Info($"[BotInvitedJoinGroupRequestEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IBotInvitedJoinGroupRequestEventHandler)
+							{
+								if (((IBotInvitedJoinGroupRequestEventHandler)handler).HandleBotInvitedJoinGroupRequestEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+
+				#endregion
+
+				#region 其他客户端事件
+
+				case "OtherClientOnlineEvent":
+					{
+						var e = OtherClientOnlineEventData.Parse(message);
+						logger.Info($"[OtherClientOnlineEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IOtherClientOnlineEventHandler)
+							{
+								if (((IOtherClientOnlineEventHandler)handler).HandleOtherClientOnlineEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
+				case "OtherClientOfflineEvent":
+					{
+						var e = OtherClientOfflineEventData.Parse(message);
+						logger.Info($"[OtherClientOfflineEvent] => {message.ToString(Formatting.None).ReplaceReturn()}");
+						foreach (var handler in handlers)
+						{
+							if (handler is IOtherClientOfflineEventHandler)
+							{
+								if (((IOtherClientOfflineEventHandler)handler).HandleOtherClientOfflineEvent(miraiSession, e))
+								{
+									break;
+								}
+							}
+						}
+					}
+					break;
 
 				#endregion
 
@@ -579,3 +894,4 @@ namespace Mirai.CSharp.Light
 #pragma warning restore CS8601 // 引用类型赋值可能为 null。
 #pragma warning restore CS8602 // 解引用可能出现空引用。
 #pragma warning restore CS8604 // 引用类型参数可能为 null。
+#pragma warning restore IDE0038 // 使用模式匹配

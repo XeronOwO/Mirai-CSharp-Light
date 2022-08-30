@@ -9,7 +9,7 @@ namespace Mirai.CSharp.Light.Models.Data
     /// <summary>
     /// 基本用户信息接口
     /// </summary>
-    public interface IUserData : ISenderData
+    public interface IUserData : IIdData
     {
         /// <summary>
         /// QQ昵称
