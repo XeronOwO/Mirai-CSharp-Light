@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace Mirai.CSharp.Light.Models.Message
 {
-	internal class AtAllMessage : IChatMessage
+	/// <summary>
+	/// 全体消息
+	/// </summary>
+	public class AtAllMessage : IChatMessage
 	{
 		/// <inheritdoc/>
 		public string Type { get; } = "AtAll";

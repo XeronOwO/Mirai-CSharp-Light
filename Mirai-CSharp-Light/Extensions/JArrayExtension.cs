@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 #pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
+#pragma warning disable CS8601 // 引用类型赋值可能为 null。
 #pragma warning disable CS8604 // 引用类型参数可能为 null。
 namespace Mirai.CSharp.Light.Extensions
 {
@@ -57,13 +58,34 @@ namespace Mirai.CSharp.Light.Extensions
 					case "Xml":
 						chain[i] = new XmlMessage((string?)data["xml"]);
 						break;
+					case "Forward":
+						chain[i] = new ForwardMessage(((JArray)data["nodeList"]).ToNodeMessageArray());
+						break;
 					default:
 						break;
 				}
 			}
 			return chain;
 		}
+
+		public static NodeMessage[] ToNodeMessageArray(this JArray array)
+		{
+			var list = new List<NodeMessage>();
+			foreach (var obj in array.Cast<JObject>())
+			{
+				list.Add(new NodeMessage()
+				{
+					SenderId = (long)obj["senderId"],
+					Time = (int)obj["time"],
+					SenderName = (string)obj["senderName"],
+					MessageChain = ((JArray)obj["messageChain"]).ToIChatMessageArray(),
+					MessageId = (int?)obj["messageId"],
+				});
+			}
+			return list.ToArray();
+		}
 	}
 }
 #pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
+#pragma warning restore CS8601 // 引用类型赋值可能为 null。
 #pragma warning restore CS8604 // 引用类型参数可能为 null。
