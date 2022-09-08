@@ -494,7 +494,7 @@ namespace Mirai.CSharp.Light.Session
 
 		#region 获取漫游消息
 
-		public CommonMessageData[] GetRoamingMessages(long timeStart, long timeEnd, long target)
+		public CommonMessageData[] GetRoamingMessages(int timeStart, int timeEnd, long target)
 		{
 			if (APIVersion < new Version(2, 6, 0))
 			{
@@ -518,7 +518,7 @@ namespace Mirai.CSharp.Light.Session
 			return data;
 		}
 
-		public Task<CommonMessageData[]> GetRoamingMessagesAsync(long timeStart, long timeEnd, long target)
+		public Task<CommonMessageData[]> GetRoamingMessagesAsync(int timeStart, int timeEnd, long target)
 		{
 			if (APIVersion < new Version(2, 6, 0))
 			{
@@ -533,7 +533,7 @@ namespace Mirai.CSharp.Light.Session
 			{
 				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，不支持获取漫游消息");
 			}
-			return GetRoamingMessages(timeStart.ToTimestamp(), timeEnd.ToTimestamp(), target);
+			return GetRoamingMessages(timeStart.ToQQTimestamp(), timeEnd.ToQQTimestamp(), target);
 		}
 
 		public Task<CommonMessageData[]> GetRoamingMessagesAsync(DateTime timeStart, DateTime timeEnd, long target) {
@@ -541,7 +541,7 @@ namespace Mirai.CSharp.Light.Session
 			{
 				throw new MiraiException("MiraiSession", "API版本为2.6.0以下，不支持获取漫游消息");
 			}
-			return GetRoamingMessagesAsync(timeStart.ToTimestamp(), timeEnd.ToTimestamp(), target);
+			return GetRoamingMessagesAsync(timeStart.ToQQTimestamp(), timeEnd.ToQQTimestamp(), target);
 		}
 
 		#endregion
@@ -832,12 +832,14 @@ namespace Mirai.CSharp.Light.Session
 		public ImageMessage UploadImage(ContextType type, string path)
 		{
 			var file = new FileInfo(path);
+			var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
 			var result = Post("uploadImage", new MultipartFormDataContent
 			{
 				{ new StringContent(SessionKey), "sessionKey" },
 				{ new StringContent(type.GetString().ToLower()), "type" },
-				{ new StreamContent(new FileStream(path, FileMode.Open, FileAccess.Read)), "img", file.Name }
+				{ new StreamContent(stream), "img", file.Name }
 			});
+			stream.Close();
 			logger.Info($"[UploadImage] <= ImageId:{(string)result["imageId"]}");
 			return new ImageMessage((string)result["imageId"], (string)result["url"], null, null);
 		}

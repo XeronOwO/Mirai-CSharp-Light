@@ -15,7 +15,6 @@ namespace Mirai.CSharp.Light.Models.Message
 		/// <inheritdoc/>
 		public string Type { get; } = "Xml";
 
-
 		/// <summary>
 		/// 源数据
 		/// </summary>

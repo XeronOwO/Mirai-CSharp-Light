@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Mirai.CSharp.Light.Builder
 {
 	/// <summary>
-	/// 用于更方便快捷地构建MiraiLight
+	/// 用于更方便快捷地构建MiraiCSharpLight
 	/// </summary>
 	public class MiraiCSharpLightBuilder
 	{
@@ -19,7 +19,7 @@ namespace Mirai.CSharp.Light.Builder
 		/// 详见：<see href="https://github.com/project-mirai/mirai-api-http">Mirai-Api-Http</see>
 		/// </summary>
 		/// <param name="verifyKey"></param>
-		/// <returns>MiraiBuilder实例</returns>
+		/// <returns>MiraiCSharpLightBuilder实例</returns>
 		public MiraiCSharpLightBuilder SetVerifyKey(string verifyKey)
 		{
 			session.VerifyKey = verifyKey;
@@ -30,7 +30,7 @@ namespace Mirai.CSharp.Light.Builder
 		/// 设置Session将要绑定的Bot的qq号。<br/>
 		/// </summary>
 		/// <param name="qq">Session将要绑定的Bot的qq号</param>
-		/// <returns>MiraiBuilder实例</returns>
+		/// <returns>MiraiCSharpLightBuilder实例</returns>
 		public MiraiCSharpLightBuilder SetQQ(long qq)
 		{
 			session.QQ = qq;
@@ -55,7 +55,7 @@ namespace Mirai.CSharp.Light.Builder
 		public Task<MiraiCSharpLight> ConnectAsync(string url) => Task.Run(() => Connect(url));
 
 		/// <summary>
-		/// 隐式转换成MiraiLight
+		/// 隐式转换成MiraiCSharpLight
 		/// </summary>
 		/// <param name="builder">MiraiBuilde实例</param>
 		public static implicit operator MiraiCSharpLight(MiraiCSharpLightBuilder builder) => builder.session;

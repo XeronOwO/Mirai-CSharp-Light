@@ -11,17 +11,17 @@ namespace Mirai.CSharp.Light.Models.Data
 {
     internal class UserData : IUserData
     {
-        private long id;
+        public long id;
 
         [JsonIgnore]
         public long Id => id;
 
-        private string nickname = "";
+		public string nickname = "";
 
 		[JsonIgnore]
 		public string Nickname => nickname;
 
-		private string remark = "";
+		public string remark = "";
 
 		[JsonIgnore]
 		public string Remark => remark;

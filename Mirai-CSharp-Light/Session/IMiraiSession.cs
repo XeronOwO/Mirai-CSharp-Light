@@ -337,7 +337,7 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="target">漫游消息对象，好友id，目前仅支持好友漫游消息</param>
 		/// <exception cref="MiraiException"></exception>
 		/// <returns>消息链数组</returns>
-		public CommonMessageData[] GetRoamingMessages(long timeStart, long timeEnd, long target);
+		public CommonMessageData[] GetRoamingMessages(int timeStart, int timeEnd, long target);
 
 		/// <summary>
 		/// 异步获取漫游消息
@@ -346,7 +346,7 @@ namespace Mirai.CSharp.Light.Session
 		/// <param name="timeEnd">结束时间, UTC+8 时间戳, 单位为秒. 可以为 Long.MAX_VALUE, 即表示到可以获取的最晚的消息为止. 低于 timeStart 的值将会被看作是 timeStart 的值.</param>
 		/// <param name="target">漫游消息对象，好友id，目前仅支持好友漫游消息</param>
 		/// <returns>Task实例，其Result为消息链数组</returns>
-		public Task<CommonMessageData[]> GetRoamingMessagesAsync(long timeStart, long timeEnd, long target);
+		public Task<CommonMessageData[]> GetRoamingMessagesAsync(int timeStart, int timeEnd, long target);
 
 		/// <summary>
 		/// 获取漫游消息

@@ -19,7 +19,7 @@ using System.Web;
 namespace Mirai.CSharp.Light
 {
 	/// <summary>
-	/// MiraiLight类，使用HTTP Adapter
+	/// MiraiCSharpLight类，使用HTTP Adapter
 	/// </summary>
 	public class MiraiCSharpLight
 	{
